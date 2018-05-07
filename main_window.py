@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from matplotlib_in_qt import ApplicationWindow
 from ui_main_window import Ui_MainWindow
-
+from result_window import ResultWindow
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
             self.ui.rootX1.setEnabled(True)
 
     def rootSolve(self):
-        aw = ApplicationWindow(self)
+        aw = ResultWindow(self)     # this method should take plots and table data
         aw.show()
         # msg = QtWidgets.QMessageBox(self)
         # msg.setIcon(QtWidgets.QMessageBox.Critical)
