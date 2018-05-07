@@ -278,7 +278,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.tab_4.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.connectUi()
+        # self.connectUi()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -339,32 +339,32 @@ class Ui_MainWindow(object):
         self.tab_4.setTabText(self.tab_4.indexOf(self.tab_3), _translate("MainWindow", "System of Equations"))
 
 
-
-
-    def connectUi(self):
-        self.sysAddBtn.clicked.connect(self.sysAdd)
-        self.sysRemoveBtn.clicked.connect(self.sysRemove)
-        self.rootLoadBtn.clicked.connect(self.loadFile)
-        self.interpolationLoadBtn.clicked.connect(self.loadFile)
-        self.sysLoadBtn.clicked.connect(self.loadFile)
-
-    def sysAdd(self):
-        if self.sysEqnsForm.rowCount() < 10:
-            eqn_number = str(self.sysEqnsForm.rowCount() + 1)
-            label = QtWidgets.QLabel("  Equation " + eqn_number)
-            label.setObjectName("sysEqn" + eqn_number + "Label")
-            lineEdit = QtWidgets.QLineEdit()
-            lineEdit.setObjectName("sysEqn" + eqn_number + "LineEdit")
-            lineEdit.setPlaceholderText("Example: 2a + 5b - 3c = 5")
-            self.sysEqnsForm.addRow(label, lineEdit)
-
-    def sysRemove(self):
-        if self.sysEqnsForm.rowCount() > 2:
-            self.sysEqnsForm.removeRow(self.sysEqnsForm.rowCount() - 1)
-
-    def loadFile(self):
-        options = QtWidgets.QFileDialog.Options()
-        options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        fileName, _ = QtWidgets.QFileDialog.getOpenFileName()
-        if fileName:
-            print(fileName)
+    #
+    #
+    # def connectUi(self):
+    #     self.sysAddBtn.clicked.connect(self.sysAdd)
+    #     self.sysRemoveBtn.clicked.connect(self.sysRemove)
+    #     self.rootLoadBtn.clicked.connect(self.loadFile)
+    #     self.interpolationLoadBtn.clicked.connect(self.loadFile)
+    #     self.sysLoadBtn.clicked.connect(self.loadFile)
+    #
+    # def sysAdd(self):
+    #     if self.sysEqnsForm.rowCount() < 10:
+    #         eqn_number = str(self.sysEqnsForm.rowCount() + 1)
+    #         label = QtWidgets.QLabel("  Equation " + eqn_number)
+    #         label.setObjectName("sysEqn" + eqn_number + "Label")
+    #         lineEdit = QtWidgets.QLineEdit()
+    #         lineEdit.setObjectName("sysEqn" + eqn_number + "LineEdit")
+    #         lineEdit.setPlaceholderText("Example: 2a + 5b - 3c = 5")
+    #         self.sysEqnsForm.addRow(label, lineEdit)
+    #
+    # def sysRemove(self):
+    #     if self.sysEqnsForm.rowCount() > 2:
+    #         self.sysEqnsForm.removeRow(self.sysEqnsForm.rowCount() - 1)
+    #
+    # def loadFile(self):
+    #     options = QtWidgets.QFileDialog.Options()
+    #     options |= QtWidgets.QFileDialog.DontUseNativeDialog
+    #     fileName, _ = QtWidgets.QFileDialog.getOpenFileName()
+    #     if fileName:
+    #         print(fileName)
