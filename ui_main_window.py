@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main.ui'
+# Form implementation generated from reading ui file 'ui_main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -145,23 +145,29 @@ class Ui_MainWindow(object):
         self.verticalLayout_14.addItem(spacerItem2)
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_12.addItem(spacerItem3)
         self.rootLoadBtn = QtWidgets.QPushButton(self.tab_1)
         self.rootLoadBtn.setObjectName("rootLoadBtn")
         self.horizontalLayout_12.addWidget(self.rootLoadBtn)
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_12.addItem(spacerItem3)
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_12.addItem(spacerItem4)
         self.rootSolveBtn = QtWidgets.QPushButton(self.tab_1)
         self.rootSolveBtn.setObjectName("rootSolveBtn")
         self.horizontalLayout_12.addWidget(self.rootSolveBtn)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_12.addItem(spacerItem5)
         self.verticalLayout_14.addLayout(self.horizontalLayout_12)
+        spacerItem6 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_14.addItem(spacerItem6)
         self.tab_4.addTab(self.tab_1, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.tab_2)
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_15.setObjectName("verticalLayout_15")
-        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_15.addItem(spacerItem4)
+        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_15.addItem(spacerItem7)
         self.label_25 = QtWidgets.QLabel(self.tab_2)
         font = QtGui.QFont()
         font.setBold(True)
@@ -195,15 +201,15 @@ class Ui_MainWindow(object):
         self.interpolationOrderLineEdit.setObjectName("interpolationOrderLineEdit")
         self.formLayout_5.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.interpolationOrderLineEdit)
         self.verticalLayout_15.addLayout(self.formLayout_5)
-        spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_15.addItem(spacerItem5)
+        spacerItem8 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_15.addItem(spacerItem8)
         self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")
         self.interpolationLoadBtn = QtWidgets.QPushButton(self.tab_2)
         self.interpolationLoadBtn.setObjectName("interpolationLoadBtn")
         self.horizontalLayout_13.addWidget(self.interpolationLoadBtn)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_13.addItem(spacerItem6)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_13.addItem(spacerItem9)
         self.interpolationSolveBtn = QtWidgets.QPushButton(self.tab_2)
         self.interpolationSolveBtn.setObjectName("interpolationSolveBtn")
         self.horizontalLayout_13.addWidget(self.interpolationSolveBtn)
@@ -214,8 +220,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.tab_3)
         self.verticalLayout_17.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_17.setObjectName("verticalLayout_17")
-        spacerItem7 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout_17.addItem(spacerItem7)
+        spacerItem10 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_17.addItem(spacerItem10)
         self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_15.setObjectName("horizontalLayout_15")
         self.sysEqnsLabel = QtWidgets.QLabel(self.tab_3)
@@ -225,8 +231,8 @@ class Ui_MainWindow(object):
         self.sysEqnsLabel.setFont(font)
         self.sysEqnsLabel.setObjectName("sysEqnsLabel")
         self.horizontalLayout_15.addWidget(self.sysEqnsLabel)
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_15.addItem(spacerItem8)
+        spacerItem11 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_15.addItem(spacerItem11)
         self.sysAddBtn = QtWidgets.QPushButton(self.tab_3)
         self.sysAddBtn.setObjectName("sysAddBtn")
         self.horizontalLayout_15.addWidget(self.sysAddBtn)
@@ -249,15 +255,15 @@ class Ui_MainWindow(object):
         self.sysEqn2LineEdit.setObjectName("sysEqn2LineEdit")
         self.sysEqnsForm.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.sysEqn2LineEdit)
         self.verticalLayout_17.addLayout(self.sysEqnsForm)
-        spacerItem9 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_17.addItem(spacerItem9)
+        spacerItem12 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_17.addItem(spacerItem12)
         self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_14.setObjectName("horizontalLayout_14")
         self.sysLoadBtn = QtWidgets.QPushButton(self.tab_3)
         self.sysLoadBtn.setObjectName("sysLoadBtn")
         self.horizontalLayout_14.addWidget(self.sysLoadBtn)
-        spacerItem10 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_14.addItem(spacerItem10)
+        spacerItem13 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_14.addItem(spacerItem13)
         self.sysSolveBtn = QtWidgets.QPushButton(self.tab_3)
         self.sysSolveBtn.setObjectName("sysSolveBtn")
         self.horizontalLayout_14.addWidget(self.sysSolveBtn)
@@ -278,7 +284,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.tab_4.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        # self.connectUi()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -338,33 +343,3 @@ class Ui_MainWindow(object):
         self.sysSolveBtn.setText(_translate("MainWindow", "Solve"))
         self.tab_4.setTabText(self.tab_4.indexOf(self.tab_3), _translate("MainWindow", "System of Equations"))
 
-
-    #
-    #
-    # def connectUi(self):
-    #     self.sysAddBtn.clicked.connect(self.sysAdd)
-    #     self.sysRemoveBtn.clicked.connect(self.sysRemove)
-    #     self.rootLoadBtn.clicked.connect(self.loadFile)
-    #     self.interpolationLoadBtn.clicked.connect(self.loadFile)
-    #     self.sysLoadBtn.clicked.connect(self.loadFile)
-    #
-    # def sysAdd(self):
-    #     if self.sysEqnsForm.rowCount() < 10:
-    #         eqn_number = str(self.sysEqnsForm.rowCount() + 1)
-    #         label = QtWidgets.QLabel("  Equation " + eqn_number)
-    #         label.setObjectName("sysEqn" + eqn_number + "Label")
-    #         lineEdit = QtWidgets.QLineEdit()
-    #         lineEdit.setObjectName("sysEqn" + eqn_number + "LineEdit")
-    #         lineEdit.setPlaceholderText("Example: 2a + 5b - 3c = 5")
-    #         self.sysEqnsForm.addRow(label, lineEdit)
-    #
-    # def sysRemove(self):
-    #     if self.sysEqnsForm.rowCount() > 2:
-    #         self.sysEqnsForm.removeRow(self.sysEqnsForm.rowCount() - 1)
-    #
-    # def loadFile(self):
-    #     options = QtWidgets.QFileDialog.Options()
-    #     options |= QtWidgets.QFileDialog.DontUseNativeDialog
-    #     fileName, _ = QtWidgets.QFileDialog.getOpenFileName()
-    #     if fileName:
-    #         print(fileName)
