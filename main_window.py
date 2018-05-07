@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from matplotlib_in_qt import ApplicationWindow
 from ui_main_window import Ui_MainWindow
 from result_window import ResultWindow
 
