@@ -1,15 +1,22 @@
-import sympy
 import numpy
 import timeit
+from src.roots_finder.equations_parser import *
 
 
 class BiergeVieta:
-    def solve(self, equation, current_approx, max_iterations=50, epsilon=0.0001):
+    def solve(self, equation, *args, max_iterations=50, epsilon=0.0001):
+        if len(args) < 1:
+            raise TypeError("Missing arguments")
+        current_approx = args[0]
+        if len(args) > 1:
+            max_iterations = args[1]
+        if len(args) > 2:
+            epsilon = args[1]
         number_of_iterations = 0
         start_time = timeit.default_timer()
         # Parsing string into a func using Sympy lib and throw exception if the function not valid
         try:
-            expression = sympy.simplify(equation)
+            expression = equation_to_expression(equation)
             polynomial = sympy.Poly(expression)
             poly_coefficients = numpy.array(polynomial.all_coeffs())
         except ValueError:
@@ -38,7 +45,10 @@ class BiergeVieta:
             approximate_root = current_approx - displacement
             error = abs((approximate_root - current_approx) / approximate_root) * 100
             # TODO adding iterations
-            # iterations.append(iteration)
+            iteration = numpy.array((poly_coefficients, horner_coeffs, derivative_coeffs, approximate_root, error),
+                                    dtype=[('a', numpy.array()), ('b', numpy.array()), ('c', numpy.array()),
+                                           ('approx_root', numpy.float), ('err', numpy.float)])
+            iterations.append(iteration)
             current_approx = approximate_root
             number_of_iterations += 1
 

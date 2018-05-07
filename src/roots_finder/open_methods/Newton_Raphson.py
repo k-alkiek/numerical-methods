@@ -1,20 +1,28 @@
-import sympy
 import numpy
 import timeit
+from src.roots_finder.equations_parser import *
 
 
 class NewtonRaphson:
     # TODO adding modified Newton Raphson algorithms
-    def solve(self, equation, current_approx, max_iterations=50, epsilon=0.0001):
+    def solve(self, equation, *args, max_iterations=50, epsilon=0.0001):
+        if len(args) < 1:
+            raise TypeError("Missing arguments")
+        current_approx = args[0]
+        if len(args) > 1:
+            max_iterations = args[1]
+        if len(args) > 2:
+            epsilon = args[1]
+
         number_of_iterations = 0
         start_time = timeit.default_timer()
         # Parsing string into a func using Sympy lib and throw exception if the function not valid
         try:
-            expression = sympy.simplify(equation)
-            x = expression.free_symbols.pop()
+            expression = equation_to_expression(equation)
+            x = get_symbol(expression)
             derivative = sympy.diff(expression, x)
-            func = sympy.lambdify(x, expression)
-            diff = sympy.lambdify(x, derivative)
+            func = expression_to_lambda(x, expression)
+            diff = expression_to_lambda(x, derivative)
         except ValueError:
             raise ValueError("Not a valid function")
         approximate_root = 0
@@ -25,7 +33,10 @@ class NewtonRaphson:
             approximate_root = current_approx - displacement
             error = abs((approximate_root - current_approx) / approximate_root) * 100
             # TODO adding iterations
-            # iterations.append(iteration)
+            iteration = numpy.array((current_approx, approximate_root, error),
+                                    dtype=[('cur_approx', numpy.float), ('approx_root', numpy.float),
+                                           ('err', numpy.float)])
+            iterations.append(iteration)
             current_approx = approximate_root
             number_of_iterations += 1
         execution_time = timeit.default_timer() - start_time
