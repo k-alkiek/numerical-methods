@@ -26,13 +26,13 @@ class Ui_MainWindow(object):
         self.label_26.setAlignment(QtCore.Qt.AlignCenter)
         self.label_26.setObjectName("label_26")
         self.verticalLayout_10.addWidget(self.label_26)
-        self.rootLoadBtn = QtWidgets.QTabWidget(self.centralwidget)
+        self.tab_4 = QtWidgets.QTabWidget(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.rootLoadBtn.sizePolicy().hasHeightForWidth())
-        self.rootLoadBtn.setSizePolicy(sizePolicy)
-        self.rootLoadBtn.setObjectName("rootLoadBtn")
+        sizePolicy.setHeightForWidth(self.tab_4.sizePolicy().hasHeightForWidth())
+        self.tab_4.setSizePolicy(sizePolicy)
+        self.tab_4.setObjectName("tab_4")
         self.tab_0 = QtWidgets.QWidget()
         self.tab_0.setAccessibleName("")
         self.tab_0.setObjectName("tab_0")
@@ -44,7 +44,7 @@ class Ui_MainWindow(object):
         self.textBrowser = QtWidgets.QTextBrowser(self.tab_0)
         self.textBrowser.setObjectName("textBrowser")
         self.verticalLayout_16.addWidget(self.textBrowser)
-        self.rootLoadBtn.addTab(self.tab_0, "")
+        self.tab_4.addTab(self.tab_0, "")
         self.tab_1 = QtWidgets.QWidget()
         self.tab_1.setObjectName("tab_1")
         self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.tab_1)
@@ -145,16 +145,16 @@ class Ui_MainWindow(object):
         self.verticalLayout_14.addItem(spacerItem2)
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_12.setObjectName("horizontalLayout_12")
-        self.rootLoadBtn_2 = QtWidgets.QPushButton(self.tab_1)
-        self.rootLoadBtn_2.setObjectName("rootLoadBtn_2")
-        self.horizontalLayout_12.addWidget(self.rootLoadBtn_2)
+        self.rootLoadBtn = QtWidgets.QPushButton(self.tab_1)
+        self.rootLoadBtn.setObjectName("rootLoadBtn")
+        self.horizontalLayout_12.addWidget(self.rootLoadBtn)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_12.addItem(spacerItem3)
         self.rootSolveBtn = QtWidgets.QPushButton(self.tab_1)
         self.rootSolveBtn.setObjectName("rootSolveBtn")
         self.horizontalLayout_12.addWidget(self.rootSolveBtn)
         self.verticalLayout_14.addLayout(self.horizontalLayout_12)
-        self.rootLoadBtn.addTab(self.tab_1, "")
+        self.tab_4.addTab(self.tab_1, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
         self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.tab_2)
@@ -208,7 +208,7 @@ class Ui_MainWindow(object):
         self.interpolationSolveBtn.setObjectName("interpolationSolveBtn")
         self.horizontalLayout_13.addWidget(self.interpolationSolveBtn)
         self.verticalLayout_15.addLayout(self.horizontalLayout_13)
-        self.rootLoadBtn.addTab(self.tab_2, "")
+        self.tab_4.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.tab_3)
@@ -262,9 +262,9 @@ class Ui_MainWindow(object):
         self.sysSolveBtn.setObjectName("sysSolveBtn")
         self.horizontalLayout_14.addWidget(self.sysSolveBtn)
         self.verticalLayout_17.addLayout(self.horizontalLayout_14)
-        self.rootLoadBtn.addTab(self.tab_3, "")
-        self.verticalLayout_10.addWidget(self.rootLoadBtn)
-        self.rootLoadBtn.raise_()
+        self.tab_4.addTab(self.tab_3, "")
+        self.verticalLayout_10.addWidget(self.tab_4)
+        self.tab_4.raise_()
         self.label_26.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -276,7 +276,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.rootLoadBtn.setCurrentIndex(2)
+        self.tab_4.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.connectUi()
 
@@ -284,8 +284,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label_26.setText(_translate("MainWindow", "Numerical Methods Project"))
-        self.rootLoadBtn.setToolTip(_translate("MainWindow", "<html><head/><body><p>Solves a system of equations using Gauss Jordan method.</p></body></html>"))
-        self.rootLoadBtn.setWhatsThis(_translate("MainWindow", "<html><head/><body><p>Solves a system of equations using Gauss Jordan method.</p></body></html>"))
+        self.tab_4.setToolTip(_translate("MainWindow", "<html><head/><body><p>Solves a system of equations using Gauss Jordan method.</p></body></html>"))
+        self.tab_4.setWhatsThis(_translate("MainWindow", "<html><head/><body><p>Solves a system of equations using Gauss Jordan method.</p></body></html>"))
         self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -294,7 +294,7 @@ class Ui_MainWindow(object):
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">very accuracy</p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">so error</p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.rootLoadBtn.setTabText(self.rootLoadBtn.indexOf(self.tab_0), _translate("MainWindow", "Welcome"))
+        self.tab_4.setTabText(self.tab_4.indexOf(self.tab_0), _translate("MainWindow", "Welcome"))
         self.label_8.setText(_translate("MainWindow", "  Choose Method"))
         self.rootComboBox.setCurrentText(_translate("MainWindow", "General Algorithm"))
         self.rootComboBox.setItemText(0, _translate("MainWindow", "General Algorithm"))
@@ -310,9 +310,9 @@ class Ui_MainWindow(object):
         self.label_27.setText(_translate("MainWindow", "  Conditions"))
         self.label_28.setText(_translate("MainWindow", "  Max Iterations"))
         self.label_29.setText(_translate("MainWindow", "  Percision"))
-        self.rootLoadBtn_2.setText(_translate("MainWindow", "Load from file"))
+        self.rootLoadBtn.setText(_translate("MainWindow", "Load from file"))
         self.rootSolveBtn.setText(_translate("MainWindow", "Solve"))
-        self.rootLoadBtn.setTabText(self.rootLoadBtn.indexOf(self.tab_1), _translate("MainWindow", "Root Finding"))
+        self.tab_4.setTabText(self.tab_4.indexOf(self.tab_1), _translate("MainWindow", "Root Finding"))
         self.label_25.setText(_translate("MainWindow", "  Choose Method"))
         self.interpolationComboBox.setCurrentText(_translate("MainWindow", "Newton"))
         self.interpolationComboBox.setItemText(0, _translate("MainWindow", "Newton"))
@@ -324,7 +324,7 @@ class Ui_MainWindow(object):
         self.interpolationQueryLineEdit.setPlaceholderText(_translate("MainWindow", "Enter points as a comma seperated list of integers: 1, 2.25, 3.4 ..."))
         self.interpolationLoadBtn.setText(_translate("MainWindow", "Load from file"))
         self.interpolationSolveBtn.setText(_translate("MainWindow", "Solve"))
-        self.rootLoadBtn.setTabText(self.rootLoadBtn.indexOf(self.tab_2), _translate("MainWindow", "Interpolation"))
+        self.tab_4.setTabText(self.tab_4.indexOf(self.tab_2), _translate("MainWindow", "Interpolation"))
         self.sysEqnsLabel.setText(_translate("MainWindow", "  Equations"))
         self.sysAddBtn.setToolTip(_translate("MainWindow", "<html><head/><body><p>Add new equation to the system</p></body></html>"))
         self.sysAddBtn.setText(_translate("MainWindow", "Add"))
@@ -336,13 +336,17 @@ class Ui_MainWindow(object):
         self.sysEqn2LineEdit.setPlaceholderText(_translate("MainWindow", "Example: 2a + 5b - 3c = 5"))
         self.sysLoadBtn.setText(_translate("MainWindow", "Load from file"))
         self.sysSolveBtn.setText(_translate("MainWindow", "Solve"))
-        self.rootLoadBtn.setTabText(self.rootLoadBtn.indexOf(self.tab_3), _translate("MainWindow", "System of Equations"))
+        self.tab_4.setTabText(self.tab_4.indexOf(self.tab_3), _translate("MainWindow", "System of Equations"))
+
+
 
 
     def connectUi(self):
         self.sysAddBtn.clicked.connect(self.sysAdd)
         self.sysRemoveBtn.clicked.connect(self.sysRemove)
-
+        self.rootLoadBtn.clicked.connect(self.loadFile)
+        self.interpolationLoadBtn.clicked.connect(self.loadFile)
+        self.sysLoadBtn.clicked.connect(self.loadFile)
 
     def sysAdd(self):
         if self.sysEqnsForm.rowCount() < 10:
@@ -354,8 +358,13 @@ class Ui_MainWindow(object):
             lineEdit.setPlaceholderText("Example: 2a + 5b - 3c = 5")
             self.sysEqnsForm.addRow(label, lineEdit)
 
-
     def sysRemove(self):
         if self.sysEqnsForm.rowCount() > 2:
             self.sysEqnsForm.removeRow(self.sysEqnsForm.rowCount() - 1)
-            # self.sysEqnsForm.removeRow()
+
+    def loadFile(self):
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName()
+        if fileName:
+            print(fileName)

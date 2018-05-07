@@ -34,7 +34,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QTabWidget" name="rootLoadBtn">
+     <widget class="QTabWidget" name="tab_4">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -48,7 +48,7 @@
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Solves a system of equations using Gauss Jordan method.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_0">
        <property name="accessibleName">
@@ -318,7 +318,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_12">
           <item>
-           <widget class="QPushButton" name="rootLoadBtn_2">
+           <widget class="QPushButton" name="rootLoadBtn">
             <property name="text">
              <string>Load from file</string>
             </property>
@@ -640,7 +640,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
    <zorder>label</zorder>
-   <zorder>rootLoadBtn</zorder>
+   <zorder>tab_4</zorder>
    <zorder>label_26</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
