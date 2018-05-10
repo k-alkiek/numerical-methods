@@ -38,6 +38,10 @@ class Bisection:
                 raise ValueError("Bisection can't find a root for this interval")
             approximate_root = (left + right) / 2
             approximate_root_value = func(approximate_root)
+            # TODO adding iterations
+            iteration = numpy.array((left, right, approximate_root, error),
+                                    dtype=[('xl', numpy.float), ('xu', numpy.float), ('xr', numpy.float),
+                                           ('err', numpy.float)])
             # Determine the next interval
             if approximate_root_value * left_value < 0:
                 right = approximate_root
@@ -46,10 +50,6 @@ class Bisection:
             else:
                 break
             error = abs((approximate_root - prev_approx) / approximate_root) * 100
-            # TODO adding iterations
-            iteration = numpy.array((left, right, approximate_root, error),
-                                    dtype=[('xl', numpy.float), ('xu', numpy.float), ('xr', numpy.float),
-                                           ('err', numpy.float)])
             iterations.append(iteration)
             prev_approx = approximate_root
             number_of_iterations += 1
