@@ -17,6 +17,8 @@ class BiergeVieta:
         # Parsing string into a func using Sympy lib and throw exception if the function not valid
         try:
             expression = equation_to_expression(equation)
+            x = get_symbol(expression)
+            func = expression_to_lambda(x, expression)
             polynomial = sympy.Poly(expression)
             poly_coefficients = numpy.array(polynomial.all_coeffs())
         except ValueError:
@@ -57,4 +59,4 @@ class BiergeVieta:
         if number_of_iterations > max_iterations:
             raise ValueError("Bierge Vieta method can't find a root for this function")
 
-        return number_of_iterations, execution_time, iterations, approximate_root, error
+        return number_of_iterations, execution_time, iterations, approximate_root, error, func
