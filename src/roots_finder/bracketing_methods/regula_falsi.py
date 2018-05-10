@@ -29,7 +29,7 @@ class FalsePosition:
         error = 0
         iterations = []  # Iteration array to store each iteration
         # Iterations
-        while abs(right - left) >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             left_value, right_value = func(left), func(right)
             # Handling if this interval has odd roots between left and and right (At least one root)
             if left_value * right_value > 0:
@@ -52,10 +52,9 @@ class FalsePosition:
             iterations.append(iteration)
             prev_approx = approximate_root
             number_of_iterations += 1
+            if abs(right - left) < epsilon or number_of_iterations > max_iterations:
+                break
 
         execution_time = timeit.default_timer() - start_time
-
-        if number_of_iterations > max_iterations:
-            raise ValueError("False position method can't find a root for this function")
 
         return number_of_iterations, execution_time, iterations, approximate_root, error, func

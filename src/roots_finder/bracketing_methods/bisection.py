@@ -28,10 +28,10 @@ class Bisection:
 
         approximate_root = 0
         prev_approx = 0
-        error = 0
+        error = 100
         iterations = []  # Iteration array to store each iteration
         # Iterations
-        while abs(right - left) >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             left_value, right_value = func(left), func(right)
             # Handling if this interval has odd roots between left and and right (At least one root)
             if left_value * right_value > 0:
@@ -53,10 +53,9 @@ class Bisection:
             iterations.append(iteration)
             prev_approx = approximate_root
             number_of_iterations += 1
+            if abs(right - left) < epsilon or number_of_iterations > max_iterations:
+                break
 
         execution_time = timeit.default_timer() - start_time
-        if number_of_iterations > max_iterations:
-            raise ValueError("Bisection can't find a root for this function")
 
-        # TODO implementing class to wrap outputs
         return number_of_iterations, execution_time, iterations, approximate_root, error, func

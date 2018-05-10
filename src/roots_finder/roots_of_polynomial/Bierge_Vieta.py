@@ -29,7 +29,7 @@ class BiergeVieta:
         error = 100
         iterations = []
         # Iterations
-        while error >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             horner_coeffs = numpy.zeros(len_of_poly, dtype=float)  # b's array
             derivative_coeffs = numpy.zeros(len_of_poly - 1, dtype=float)  # c's array
             # Calculate b array
@@ -55,8 +55,9 @@ class BiergeVieta:
             current_approx = approximate_root
             number_of_iterations += 1
 
+            if error < epsilon or number_of_iterations > max_iterations:
+                break
+
         execution_time = timeit.default_timer() - start_time
-        if number_of_iterations > max_iterations:
-            raise ValueError("Bierge Vieta method can't find a root for this function")
 
         return number_of_iterations, execution_time, iterations, approximate_root, error, func
