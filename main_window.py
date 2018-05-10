@@ -9,7 +9,7 @@ from src.roots_finder.root_finder_factory import RootFinderFactory
 from ui_main_window import Ui_MainWindow
 from result_window import ResultWindow
 from controllers import interpolation_controller
-from controllers import roots_finder_controller
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -69,9 +69,8 @@ class MainWindow(QMainWindow):
             pass
         else:
             factory = RootFinderFactory()
-            results = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
-            rw = ResultWindow(self, roots_finder_controller.PlotWindow, roots_finder_controller.DataTable,
-                              {"results": results})
+            results, PlotWindow, Datatable = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
+            rw = ResultWindow(self, PlotWindow, Datatable, {"results": results})
             rw.show()
     # except Exception as e:
     #     self.errorDialog(e.args[0])

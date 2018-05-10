@@ -9,7 +9,7 @@ class ResultWindow(QMainWindow):
 
     def __init__(self, parent, PlotWindow, DataTable, params):
         super(ResultWindow, self).__init__(parent)
-        self.title = 'PyQt5 tabs - pythonspot.com'
+        self.title = 'Results'
         self.left = 0
         self.top = 0
         self.width = 800
@@ -29,6 +29,14 @@ class TabWidget(QWidget):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
 
+        number_of_iterations = params["results"][0]
+        execution_time = params["results"][1]
+        approximate_root = params["results"][3]
+        error = params["results"][4]
+
+        self.summary = QLabel("Root: {:.5f} \t Error: {:.5f} \t {:d} iterations \t {:.5f} seconds"
+                                                 .format(approximate_root, error, number_of_iterations, execution_time))
+        self.layout.addWidget(self.summary)
         # Initialize tab screen
         self.tabs = QTabWidget()
         self.tab1 = PlotWindow(self.tabs, **params)

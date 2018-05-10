@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton, QHBoxLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton, QHBoxLayout, QLabel
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
@@ -15,7 +16,6 @@ class DataTable(QDialog):
         self.approximate_root = kwargs["results"][3]
         self.error = kwargs["results"][4]
         self.f = kwargs["results"][5]
-
 
         # Create table
         self.tableWidget = QTableWidget()
@@ -70,13 +70,15 @@ class PlotWindow(QDialog):
         # it takes the Canvas widget and a parent
         self.toolbar = MyNavigationToolbar(self.canvas, self)
 
-
+        self.pos_label = QLabel(str(self.pos + 1) + '/' + str(len(self.iterations)))
+        self.pos_label.setAlignment(Qt.AlignCenter)
         # set the layout
         layout = QVBoxLayout()
         layout.addWidget(self.toolbar)
         layout.addWidget(self.canvas)
         self.init_buttons()
         layout.addLayout(self.btns_layout)
+        layout.addWidget(self.pos_label)
         self.setLayout(layout)
 
 
@@ -85,7 +87,7 @@ class PlotWindow(QDialog):
 
     def plot(self):
         iteration = self.iterations[self.pos]
-
+        self.pos_label.setText(str(self.pos + 1) + '/' + str(len(self.iterations)))
 
         # create an axis
         ax = self.figure.add_subplot(111)
@@ -95,24 +97,26 @@ class PlotWindow(QDialog):
         ax.clear()
         bx.clear()
 
-
-
         ax.grid(True, which='both')
 
         ax.axhline(y=0, color='k')
         ax.axvline(x=0, color='k')
         ax.grid(True, which='both')
 
-        xpts = np.linspace(-10, 10, 1000)
-        ax.plot(xpts, self.f(xpts))
 
         xl = iteration['xl']
         xu = iteration['xu']
         xr = iteration['xr']
 
-        bx.plot([xl, xl], [0, self.f(xl)], color='r')
-        bx.plot([xr, xr], [0, self.f(xr)], color='g')
-        bx.plot([xu, xu], [0, self.f(xu)], color='r')
+        diff = xu - xl
+        xpts = np.linspace(xl-0.5*diff, xu+0.5*diff, 100)
+        ax.plot(xpts, self.f(xpts), label='f(x)')
+
+
+        bx.plot([xl, xl], [0, self.f(xl)], color='r', label='xl')
+        bx.plot([xr, xr], [0, self.f(xr)], color='g', label='xr')
+        bx.plot([xu, xu], [0, self.f(xu)], color='r', label='xu')
+        ax.legend()
         # refresh canvas
         self.canvas.draw()
         # x ^ 2 - 25
