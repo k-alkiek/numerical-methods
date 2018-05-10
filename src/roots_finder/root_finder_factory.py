@@ -32,4 +32,4 @@ class RootFinderFactory:
 
 
 solvers = RootFinderFactory()
-print(solvers.solve("Newton-Raphson", "x ** 2 - 9", 1, 10, 0.001)[2])
+print(solvers.solve("Bisection", "x ** 2 - 9", 1, 5)[2])

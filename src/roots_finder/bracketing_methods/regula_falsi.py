@@ -41,6 +41,8 @@ class FalsePosition:
             iteration = numpy.array((left, right, approximate_root, error),
                                     dtype=[('xl', numpy.float), ('xu', numpy.float), ('xr', numpy.float),
                                            ('err', numpy.float)])
+            error = abs((approximate_root - prev_approx) / approximate_root) * 100
+            iterations.append(iteration)
             # Determine the next interval
             if approximate_root_value * left_value < 0:
                 right = approximate_root
@@ -48,8 +50,6 @@ class FalsePosition:
                 left = approximate_root
             else:
                 break
-            error = abs((approximate_root - prev_approx) / approximate_root) * 100
-            iterations.append(iteration)
             prev_approx = approximate_root
             number_of_iterations += 1
             if abs(right - left) < epsilon or number_of_iterations > max_iterations:
