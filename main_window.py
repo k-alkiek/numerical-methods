@@ -1,8 +1,13 @@
+from ast import literal_eval
+
+import sympy
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from src.interpolation.interpolation import interpolate
 from ui_main_window import Ui_MainWindow
 from result_window import ResultWindow
+from controllers import interpolation_controller
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -22,6 +27,7 @@ class MainWindow(QMainWindow):
         # Connect up the buttons.
         self.ui.rootComboBox.activated.connect(self.changeRootMethod)
         self.ui.rootSolveBtn.clicked.connect(self.rootSolve)
+        self.ui.interpolationSolveBtn.clicked.connect(self.interpolationSolve)
         self.ui.sysAddBtn.clicked.connect(self.sysAdd)
         self.ui.sysRemoveBtn.clicked.connect(self.sysRemove)
         self.ui.rootLoadBtn.clicked.connect(self.loadFile)
@@ -50,6 +56,23 @@ class MainWindow(QMainWindow):
         # msg.setInformativeText("Oh no! Something went wrong.")
         # msg.setWindowTitle("Error")
         # msg.show()
+
+    def interpolationSolve(self):
+
+        sample_points = literal_eval(self.ui.interpolationSampleLineEdit.text())
+        queries = self.ui.interpolationQueryLineEdit.text().split(',')
+        interpolation = interpolate(sample_points)
+        method_index = self.ui.interpolationComboBox.currentIndex()
+
+        if method_index == 0:
+            sym_function = interpolation.newoten_method()
+        else:
+            sym_function = interpolation.lagrange()
+        f = sympy.lambdify('x', sym_function)
+
+        aw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
+                          {"f": f, "queries": queries})
+        aw.show()
 
     def sysAdd(self):
 
