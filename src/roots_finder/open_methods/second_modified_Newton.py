@@ -12,7 +12,7 @@ class SecondModifiedNewton:
         if len(args) > 1:
             max_iterations = args[1]
         if len(args) > 2:
-            epsilon = args[1]
+            epsilon = args[2]
 
         number_of_iterations = 0
         start_time = timeit.default_timer()
