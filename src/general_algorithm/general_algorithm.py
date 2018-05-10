@@ -1,5 +1,4 @@
-import sympy
-import mpmath
+import random
 from src.roots_finder.equations_parser import *
 
 class General_Algorithm:
@@ -34,7 +33,7 @@ def solve_polynomial(coefficients, num_iterations=1000, roots_prev=[]):
         return res
 
     if (len(roots_prev) == 0):
-        first_root = randint(2, 10)
+        first_root = random.randint(2, 10)
         roots_prev = [first_root]  # intial guess
         for i in range(1, n - 1):
             roots_prev.append(roots_prev[i - 1] * first_root)
