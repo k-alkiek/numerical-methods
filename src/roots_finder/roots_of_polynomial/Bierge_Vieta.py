@@ -11,7 +11,7 @@ class BiergeVieta:
         if len(args) > 1:
             max_iterations = args[1]
         if len(args) > 2:
-            epsilon = args[1]
+            epsilon = args[2]
         number_of_iterations = 0
         start_time = timeit.default_timer()
         # Parsing string into a func using Sympy lib and throw exception if the function not valid
@@ -41,13 +41,14 @@ class BiergeVieta:
                 c = horner_coeffs[i] + current_approx * derivative_coeffs[i - 1]
                 derivative_coeffs[i] = c
             # Calculate next approximation of root
+            if derivative_coeffs[-1] == 0:
+                raise ZeroDivisionError("Bierge Vieta method can't find a root for this initial value")
             displacement = horner_coeffs[-1] / derivative_coeffs[-1]
             approximate_root = current_approx - displacement
             error = abs((approximate_root - current_approx) / approximate_root) * 100
             # TODO adding iterations
-            iteration = numpy.array((poly_coefficients, horner_coeffs, derivative_coeffs, approximate_root, error),
-                                    dtype=[('a', numpy.array()), ('b', numpy.array()), ('c', numpy.array()),
-                                           ('approx_root', numpy.float), ('err', numpy.float)])
+            iteration = numpy.array((approximate_root, error),
+                                    dtype=[('approx_root', numpy.float), ('err', numpy.float)])
             iterations.append(iteration)
             current_approx = approximate_root
             number_of_iterations += 1

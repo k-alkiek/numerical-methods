@@ -12,7 +12,7 @@ class RootFinderFactory:
     def solve(self, method_name, equation, *args):
         solver = None
         if method_name == "Bisection":
-            solver = Bisection();
+            solver = Bisection()
         elif method_name == "False position":
             solver = FalsePosition()
         elif method_name == "Fixed point":
@@ -27,4 +27,9 @@ class RootFinderFactory:
             solver = SecondModifiedNewton()
         elif method_name == "Bierge Vieta":
             solver = BiergeVieta()
-        return solver.solve(equation, args)
+        # TODO adding general method
+        return solver.solve(equation, *args)
+
+
+solvers = RootFinderFactory()
+print(solvers.solve("Newton Raphson", "x ** 2 - 9", 1, 1000, 0.001)[3])
