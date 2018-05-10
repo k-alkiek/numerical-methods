@@ -45,4 +45,4 @@ class FixedPoint:
         if number_of_iterations > max_iterations:
             raise ValueError("Fixed point method can't find a root for this function")
 
-        return number_of_iterations, execution_time, iterations, approximate_root, error
+        return number_of_iterations, execution_time, iterations, approximate_root, error, func

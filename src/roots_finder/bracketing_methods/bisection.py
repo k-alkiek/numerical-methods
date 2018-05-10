@@ -6,6 +6,7 @@ from src.roots_finder.equations_parser import *
 class Bisection:
     # TODO determine to pass arguments to constructor or function
     def solve(self, equation, *args, max_iterations=50, epsilon=0.0001):
+        # Parsing arguments
         if len(args) < 2:
             raise TypeError("Missing arguments")
         left = args[0]
@@ -14,6 +15,7 @@ class Bisection:
             max_iterations = args[2]
         if len(args) > 3:
             epsilon = args[3]
+
         number_of_iterations = 0
         start_time = timeit.default_timer()
         # Parsing string into a func using Sympy lib and throw exception if the function not valid
@@ -57,4 +59,4 @@ class Bisection:
             raise ValueError("Bisection can't find a root for this function")
 
         # TODO implementing class to wrap outputs
-        return number_of_iterations, execution_time, iterations, approximate_root, error
+        return number_of_iterations, execution_time, iterations, approximate_root, error, func
