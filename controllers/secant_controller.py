@@ -103,18 +103,20 @@ class PlotWindow(QDialog):
         ax.grid(True, which='both')
 
 
-        xl = iteration['xl']
-        xu = iteration['xu']
-        xr = iteration['xr']
+        xl = iteration['prev']
+        xu = iteration['cur']
+        xr = iteration['approx']
 
-        diff = xu - xl
-        xpts = np.linspace(xl-0.5*diff, xu+0.5*diff, 100)
+        diff = max(xu, xl, xr) - min(xu, xl, xr)
+        start = min(xu, xl, xr) - 0.25*diff
+        end = max(xu, xl, xr) + 0.25*diff
+        xpts = np.linspace(start, end, 100)
         ax.plot(xpts, self.f(xpts), label='f(x)')
 
 
-        bx.plot([xl, xl], [0, self.f(xl)], color='r', label='xl')
-        bx.plot([xr, xr], [0, self.f(xr)], color='g', label='xr')
-        bx.plot([xu, xu], [0, self.f(xu)], color='r', label='xu')
+        bx.plot([xl, xl], [0, self.f(xl)], color='m', label='x(i-1)')
+        bx.plot([xr, xr], [0, self.f(xr)], color='g', label='x(i+1)')
+        bx.plot([xu, xu], [0, self.f(xu)], color='r', label='x(i)')
         ax.legend()
         # refresh canvas
         self.canvas.draw()
