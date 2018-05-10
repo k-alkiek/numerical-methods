@@ -27,7 +27,7 @@ class Secant:
         error = 100
         iterations = []
         # Iterations
-        while error >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             displacement = (func(cur_value) * (prev_value - cur_value)) / (func(prev_value) - func(cur_value))
             approximate_root = cur_value - displacement
             error = abs((approximate_root - cur_value) / approximate_root) * 100
@@ -39,8 +39,10 @@ class Secant:
             prev_value = cur_value
             cur_value = approximate_root
             number_of_iterations += 1
-        execution_time = timeit.default_timer() - start_time
-        if number_of_iterations > max_iterations:
-            raise ValueError("Secant method can't find a root for this function")
 
-        return number_of_iterations, execution_time, iterations, approximate_root, error
+            if error < epsilon or number_of_iterations > max_iterations:
+                break
+
+        execution_time = timeit.default_timer() - start_time
+
+        return number_of_iterations, execution_time, iterations, approximate_root, error, func

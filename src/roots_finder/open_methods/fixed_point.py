@@ -11,7 +11,7 @@ class FixedPoint:
         if len(args) > 1:
             max_iterations = args[1]
         if len(args) > 2:
-            epsilon = args[1]
+            epsilon = args[2]
 
         number_of_iterations = 0
         start_time = timeit.default_timer()
@@ -27,7 +27,7 @@ class FixedPoint:
         error = 100
         iterations = []
         # Iterations
-        while error >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             approximate_root = func(prev_approx)
             error = abs((approximate_root - prev_approx) / approximate_root) * 100
             # TODO adding iterations
@@ -40,9 +40,9 @@ class FixedPoint:
             if error >= 100:
                 raise ValueError("Fixed point method can't find a root for this initial value, may be diverged")
 
+            if error < epsilon or number_of_iterations > max_iterations:
+                break
+
         execution_time = timeit.default_timer() - start_time
 
-        if number_of_iterations > max_iterations:
-            raise ValueError("Fixed point method can't find a root for this function")
-
-        return number_of_iterations, execution_time, iterations, approximate_root, error
+        return number_of_iterations, execution_time, iterations, approximate_root, error, func

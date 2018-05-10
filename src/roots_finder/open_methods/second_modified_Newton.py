@@ -12,7 +12,7 @@ class SecondModifiedNewton:
         if len(args) > 1:
             max_iterations = args[1]
         if len(args) > 2:
-            epsilon = args[1]
+            epsilon = args[2]
 
         number_of_iterations = 0
         start_time = timeit.default_timer()
@@ -29,7 +29,7 @@ class SecondModifiedNewton:
         approximate_root = 0
         error = 100
         iterations = []
-        while error >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             diff = first_derivative(current_approx)
             displacement = func(current_approx) * diff
             displacement /= (diff * diff - func(current_approx) * second_derivative(current_approx))
@@ -42,8 +42,10 @@ class SecondModifiedNewton:
             iterations.append(iteration)
             current_approx = approximate_root
             number_of_iterations += 1
-        execution_time = timeit.default_timer() - start_time
-        if number_of_iterations > max_iterations:
-            raise ValueError("Secant method can't find a root for this function")
 
-        return number_of_iterations, execution_time, iterations, approximate_root, error
+            if error < epsilon or number_of_iterations > max_iterations:
+                break
+
+        execution_time = timeit.default_timer() - start_time
+
+        return number_of_iterations, execution_time, iterations, approximate_root, error, func

@@ -29,7 +29,7 @@ class FalsePosition:
         error = 0
         iterations = []  # Iteration array to store each iteration
         # Iterations
-        while abs(right - left) >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             left_value, right_value = func(left), func(right)
             # Handling if this interval has odd roots between left and and right (At least one root)
             if left_value * right_value > 0:
@@ -37,6 +37,12 @@ class FalsePosition:
             # Calculate approximate value of root
             approximate_root = (left * right_value - right * left_value) / (right_value - left_value)
             approximate_root_value = func(approximate_root)
+            # TODO adding iterations
+            iteration = numpy.array((left, right, approximate_root, error),
+                                    dtype=[('xl', numpy.float), ('xu', numpy.float), ('xr', numpy.float),
+                                           ('err', numpy.float)])
+            error = abs((approximate_root - prev_approx) / approximate_root) * 100
+            iterations.append(iteration)
             # Determine the next interval
             if approximate_root_value * left_value < 0:
                 right = approximate_root
@@ -44,18 +50,11 @@ class FalsePosition:
                 left = approximate_root
             else:
                 break
-            error = abs((approximate_root - prev_approx) / approximate_root) * 100
-            # TODO adding iterations
-            iteration = numpy.array((left, right, approximate_root, error),
-                                    dtype=[('xl', numpy.float), ('xu', numpy.float), ('xr', numpy.float),
-                                           ('err', numpy.float)])
-            iterations.append(iteration)
             prev_approx = approximate_root
             number_of_iterations += 1
+            if abs(right - left) < epsilon or number_of_iterations > max_iterations:
+                break
 
         execution_time = timeit.default_timer() - start_time
 
-        if number_of_iterations > max_iterations:
-            raise ValueError("False position method can't find a root for this function")
-
-        return number_of_iterations, execution_time, iterations, approximate_root, error
+        return number_of_iterations, execution_time, iterations, approximate_root, error, func
