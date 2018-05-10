@@ -25,10 +25,11 @@ class FirstModifiedNewton:
             diff = expression_to_lambda(x, derivative)
         except ValueError:
             raise ValueError("Not a valid function")
+
         approximate_root = 0
         error = 100
         iterations = []
-        while error >= epsilon and number_of_iterations <= max_iterations:
+        while True:
             displacement = func(current_approx) / diff(current_approx)
             approximate_root = current_approx - m * displacement
             error = abs((approximate_root - current_approx) / approximate_root) * 100
@@ -39,8 +40,10 @@ class FirstModifiedNewton:
             iterations.append(iteration)
             current_approx = approximate_root
             number_of_iterations += 1
+
+            if error < epsilon or number_of_iterations > max_iterations:
+                break
+
         execution_time = timeit.default_timer() - start_time
-        if number_of_iterations > max_iterations:
-            raise ValueError("Secant method can't find a root for this function")
 
         return number_of_iterations, execution_time, iterations, approximate_root, error, func
