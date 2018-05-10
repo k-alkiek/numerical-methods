@@ -147,7 +147,7 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <property name="text">
-            <string>Regula Falsi</string>
+            <string>False Position</string>
            </property>
           </item>
           <item>
@@ -158,6 +158,16 @@ p, li { white-space: pre-wrap; }
           <item>
            <property name="text">
             <string>Newton-Raphson</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>First modified Newton</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Second modified Newton</string>
            </property>
           </item>
           <item>
@@ -264,6 +274,19 @@ p, li { white-space: pre-wrap; }
             </property>
            </widget>
           </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="rootMaxIterations">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>1000</number>
+            </property>
+            <property name="value">
+             <number>50</number>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_29">
             <property name="text">
@@ -277,26 +300,16 @@ p, li { white-space: pre-wrap; }
              <number>10</number>
             </property>
             <property name="minimum">
-             <double>-999999999.999999046325684</double>
+             <double>0.000001000000000</double>
             </property>
             <property name="maximum">
              <double>999999999.999999046325684</double>
             </property>
-            <property name="value">
+            <property name="singleStep">
              <double>0.000100000000000</double>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QSpinBox" name="rootMaxIterations">
-            <property name="minimum">
-             <number>1</number>
-            </property>
-            <property name="maximum">
-             <number>1000</number>
-            </property>
             <property name="value">
-             <number>50</number>
+             <double>0.000100000000000</double>
             </property>
            </widget>
           </item>

@@ -5,9 +5,11 @@ from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from src.interpolation.interpolation import interpolate
+from src.roots_finder.root_finder_factory import RootFinderFactory
 from ui_main_window import Ui_MainWindow
 from result_window import ResultWindow
 from controllers import interpolation_controller
+from controllers import roots_finder_controller
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -40,22 +42,31 @@ class MainWindow(QMainWindow):
         if index == 0:
             self.ui.rootX0.setEnabled(False)
             self.ui.rootX1.setEnabled(False)
-        elif index in [1, 2, 5]:
-            self.ui.rootX0.setEnabled(True)
-            self.ui.rootX1.setEnabled(False)
-        elif index in [3, 4, 6]:
+        elif index in [1, 2, 7]:
             self.ui.rootX0.setEnabled(True)
             self.ui.rootX1.setEnabled(True)
+        else:
+            self.ui.rootX0.setEnabled(True)
+            self.ui.rootX1.setEnabled(False)
 
     def rootSolve(self):
-        aw = ResultWindow(self)     # this method should take plots and table data
-        aw.show()
-        # msg = QtWidgets.QMessageBox(self)
-        # msg.setIcon(QtWidgets.QMessageBox.Critical)
-        # msg.setText("Error")
-        # msg.setInformativeText("Oh no! Something went wrong.")
-        # msg.setWindowTitle("Error")
-        # msg.show()
+        expression = self.ui.rootFx.text()
+        method_name = self.ui.rootComboBox.currentText()
+        x0 = self.ui.rootX0.value()
+        x1 = self.ui.rootX1.value()
+        max_iterations = self.ui.rootMaxIterations.value()
+        percision = self.ui.rootPercision.value()
+
+        f = sympy.lambdify('x', expression)
+
+        if method_name == "General Algorithm":
+            pass
+        else:
+            factory = RootFinderFactory()
+            results = factory.solve(method_name, expression, [x0, x1], max_iterations, percision)
+            rw = ResultWindow(self, roots_finder_controller.PlotWindow, roots_finder_controller.DataTable,
+                              {"f": f, "results": results})
+            rw.show()
 
     def interpolationSolve(self):
 
@@ -70,9 +81,9 @@ class MainWindow(QMainWindow):
             sym_function = interpolation.lagrange()
         f = sympy.lambdify('x', sym_function)
 
-        aw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
+        rw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
                           {"f": f, "queries": queries})
-        aw.show()
+        rw.show()
 
     def sysAdd(self):
 
@@ -95,3 +106,11 @@ class MainWindow(QMainWindow):
         fileName, _ = QtWidgets.QFileDialog.getOpenFileName()
         if fileName:
             print(fileName)
+
+    def errorDialog(self, text="Oh no! Something went wrong."):
+        msg = QtWidgets.QMessageBox(self)
+        msg.setIcon(QtWidgets.QMessageBox.Critical)
+        msg.setText("Error")
+        msg.setInformativeText(text)
+        msg.setWindowTitle("Error")
+        msg.show()
