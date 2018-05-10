@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton
+from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton, QHBoxLayout
+from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
@@ -8,12 +9,12 @@ class DataTable(QDialog):
     def __init__(self, parent, **kwargs):
         super(DataTable, self).__init__(parent)
 
-        self.f = kwargs["f"]
         self.number_of_iterations= kwargs["results"][0]
         self.execution_time = kwargs["results"][1]
         self.iterations = kwargs["results"][2]
         self.approximate_root = kwargs["results"][3]
         self.error = kwargs["results"][4]
+        self.f = kwargs["results"][5]
 
 
         # Create table
@@ -50,6 +51,14 @@ class PlotWindow(QDialog):
     def __init__(self, parent, **kwargs):
         super(PlotWindow, self).__init__(parent)
 
+        self.number_of_iterations = kwargs["results"][0]
+        self.execution_time = kwargs["results"][1]
+        self.iterations = kwargs["results"][2]
+        self.approximate_root = kwargs["results"][3]
+        self.error = kwargs["results"][4]
+        self.f = kwargs["results"][5]
+        self.pos = 0;
+
         # a figure instance to plot on
         self.figure = Figure()
 
@@ -59,12 +68,15 @@ class PlotWindow(QDialog):
 
         # this is the Navigation widget
         # it takes the Canvas widget and a parent
-        self.toolbar = NavigationToolbar(self.canvas, self)
+        self.toolbar = MyNavigationToolbar(self.canvas, self)
+
 
         # set the layout
         layout = QVBoxLayout()
         layout.addWidget(self.toolbar)
         layout.addWidget(self.canvas)
+        self.init_buttons()
+        layout.addLayout(self.btns_layout)
         self.setLayout(layout)
 
 
@@ -72,15 +84,78 @@ class PlotWindow(QDialog):
 
 
     def plot(self):
-        pass
-        # # create an axis
-        # ax = self.figure.add_subplot(111)
-        #
-        # # discards the old graph
-        # # ax.clear()
-        #
-        # xpts = np.linspace(0, 100, 1000)
-        # ax.plot(xpts, self.f(xpts))
-        #
-        # # refresh canvas
-        # self.canvas.draw()
+        iteration = self.iterations[self.pos]
+
+
+        # create an axis
+        ax = self.figure.add_subplot(111)
+        bx = self.figure.add_subplot(111)
+
+        # discards the old graph
+        ax.clear()
+        bx.clear()
+
+
+
+        ax.grid(True, which='both')
+
+        ax.axhline(y=0, color='k')
+        ax.axvline(x=0, color='k')
+        ax.grid(True, which='both')
+
+        xpts = np.linspace(-10, 10, 1000)
+        ax.plot(xpts, self.f(xpts))
+
+        xl = iteration['xl']
+        xu = iteration['xu']
+        xr = iteration['xr']
+
+        bx.plot([xl, xl], [0, self.f(xl)], color='r')
+        bx.plot([xr, xr], [0, self.f(xr)], color='g')
+        bx.plot([xu, xu], [0, self.f(xu)], color='r')
+        # refresh canvas
+        self.canvas.draw()
+        # x ^ 2 - 25
+
+    def init_buttons(self):
+        self.jump_to_first_btn = QPushButton("<< Jump to Start")
+        self.previous_btn = QPushButton("< Previous")
+        self.next_btn = QPushButton("Next >")
+        self.jump_to_last_btn = QPushButton("Jump to End >>")
+
+        # connect buttons
+        self.jump_to_first_btn.clicked.connect(self.jump_to_first)
+        self.previous_btn.clicked.connect(self.previous)
+        self.next_btn.clicked.connect(self.next)
+        self.jump_to_last_btn.clicked.connect(self.jump_to_last)
+
+        self.btns_layout = QHBoxLayout()
+        self.btns_layout.addWidget(self.jump_to_first_btn)
+        self.btns_layout.addWidget(self.previous_btn)
+        self.btns_layout.addWidget(self.next_btn)
+        self.btns_layout.addWidget(self.jump_to_last_btn)
+
+    def jump_to_first(self):
+        if self.pos > 0:
+            self.pos = 0
+            self.plot()
+
+    def previous(self):
+        if self.pos > 0:
+            self.pos -= 1
+            self.plot()
+
+    def next(self):
+        if self.pos < len(self.iterations) - 1:
+            self.pos += 1
+            self.plot()
+
+    def jump_to_last(self):
+        if self.pos < len(self.iterations) - 1:
+            self.pos = len(self.iterations) - 1
+            self.plot()
+
+class MyNavigationToolbar(NavigationToolbar2QT):
+
+    toolitems = [t for t in NavigationToolbar2QT.toolitems if
+                 t[0] in ('Home','Pan', 'Zoom', 'Save','Subplots')]
