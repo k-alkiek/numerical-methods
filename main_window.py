@@ -50,23 +50,31 @@ class MainWindow(QMainWindow):
             self.ui.rootX1.setEnabled(False)
 
     def rootSolve(self):
-        expression = self.ui.rootFx.text()
-        method_name = self.ui.rootComboBox.currentText()
-        x0 = self.ui.rootX0.value()
-        x1 = self.ui.rootX1.value()
-        max_iterations = self.ui.rootMaxIterations.value()
-        percision = self.ui.rootPercision.value()
+        try:
+            expression = self.ui.rootFx.text()
+            method_name = self.ui.rootComboBox.currentText()
 
-        f = sympy.lambdify('x', expression)
+            inital_points = []
+            if self.ui.rootX0.isEnabled():
+                inital_points.append(self.ui.rootX0.value())
+            if self.ui.rootX1.isEnabled():
+                inital_points.append(self.ui.rootX1.value())
 
-        if method_name == "General Algorithm":
-            pass
-        else:
-            factory = RootFinderFactory()
-            results = factory.solve(method_name, expression, [x0, x1], max_iterations, percision)
-            rw = ResultWindow(self, roots_finder_controller.PlotWindow, roots_finder_controller.DataTable,
-                              {"f": f, "results": results})
-            rw.show()
+            max_iterations = self.ui.rootMaxIterations.value()
+            percision = self.ui.rootPercision.value()
+
+            f = sympy.lambdify('x', expression)
+
+            if method_name == "General Algorithm":
+                pass
+            else:
+                factory = RootFinderFactory()
+                results = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
+                rw = ResultWindow(self, roots_finder_controller.PlotWindow, roots_finder_controller.DataTable,
+                                  {"f": f, "results": results})
+                rw.show()
+        except Exception as e:
+            self.errorDialog(e.args[0])
 
     def interpolationSolve(self):
 
@@ -113,4 +121,5 @@ class MainWindow(QMainWindow):
         msg.setText("Error")
         msg.setInformativeText(text)
         msg.setWindowTitle("Error")
+        msg.resize(500, msg.height())
         msg.show()
