@@ -1,3 +1,5 @@
+from PyQt5 import QtWidgets
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton, QHBoxLayout, QLabel
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT
@@ -40,6 +42,8 @@ class DataTable(QDialog):
 
         for i in range (0, len(headers)):
             self.tableWidget.setHorizontalHeaderItem(i, QTableWidgetItem(headers[i]))
+            header = self.tableWidget.horizontalHeader()
+            header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
 
         for i in range(0, len(self.iterations)):
             iteration = self.iterations[i]
