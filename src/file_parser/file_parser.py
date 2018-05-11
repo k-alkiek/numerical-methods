@@ -70,6 +70,8 @@ def parse_root_finder_file(path):
         equation = Eq(parse_expr(file.readline()))
     except SyntaxError as ex:
         raise ValueError('Malformed equation: ' + ex.msg)
+    if not len(equation.free_symbols) == 1:
+        raise ValueError('Equation should contain exactly one symbol')
 
     last_pos = file.tell()
     parameters = file.readline().strip()
