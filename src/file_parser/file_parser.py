@@ -159,7 +159,7 @@ def parse_interpolation_file(path):
 def parse_equations_file(path):
     file = open(path)
     try:
-        equations = [Eq(line) for line in file]
+        equations = [Eq(parse_expr(line.strip())) for line in file]
     except SyntaxError as ex:
         raise ValueError('Malformed equation: ' + ex.msg)
     file.close()
