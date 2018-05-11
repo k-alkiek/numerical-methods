@@ -1,3 +1,4 @@
+import sympy
 from PyQt5 import QtWidgets
 
 from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton, QHeaderView
@@ -62,6 +63,7 @@ class PlotWindow(QDialog):
 
         self.f = kwargs["f"]
         self.queries = kwargs["queries"]
+        self.expr = kwargs['expr']
         self.plot()
 
 
@@ -69,7 +71,7 @@ class PlotWindow(QDialog):
 
         # create an axis
         ax = self.figure.add_subplot(111)
-
+        self.figure.suptitle(sympy.simplify(self.expr))
         # discards the old graph
         # ax.clear()
 
