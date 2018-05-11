@@ -154,3 +154,13 @@ def parse_interpolation_file(path):
         'points': list(zip(x_coords, y_coords)),
         'query_points': query_points
     }
+
+
+def parse_equations_file(path):
+    file = open(path)
+    try:
+        equations = [Eq(line) for line in file]
+    except SyntaxError as ex:
+        raise ValueError('Malformed equation: ' + ex.msg)
+    file.close()
+    return equations
