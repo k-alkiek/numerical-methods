@@ -4,7 +4,7 @@ from src.roots_finder.equations_parser import *
 
 
 class NewtonRaphson:
-    # TODO adding modified Newton Raphson algorithms
+
     def solve(self, equation, *args, max_iterations=50, epsilon=0.0001):
         if len(args) < 1:
             raise TypeError("Missing arguments")
@@ -29,10 +29,11 @@ class NewtonRaphson:
         error = 100
         iterations = []
         while True:
+            if diff(current_approx) == 0:
+                current_approx += epsilon
             displacement = func(current_approx) / diff(current_approx)
             approximate_root = current_approx - displacement
             error = abs((approximate_root - current_approx) / approximate_root) * 100
-            # TODO adding iterations
             iteration = numpy.array((current_approx, approximate_root, error),
                                     dtype=[('cur_approx', numpy.float), ('approx_root', numpy.float),
                                            ('err', numpy.float)])
@@ -40,7 +41,7 @@ class NewtonRaphson:
             current_approx = approximate_root
             number_of_iterations += 1
 
-            if error < epsilon or number_of_iterations > max_iterations:
+            if error < epsilon or number_of_iterations > max_iterations or func(current_approx) == 0:
                 break
 
         execution_time = timeit.default_timer() - start_time

@@ -4,7 +4,7 @@ from src.roots_finder.equations_parser import *
 
 
 class Bisection:
-    # TODO determine to pass arguments to constructor or function
+
     def solve(self, equation, *args, max_iterations=50, epsilon=0.0001):
         # Parsing arguments
         if len(args) < 2:
@@ -38,7 +38,7 @@ class Bisection:
                 raise ValueError("Bisection can't find a root for this interval")
             approximate_root = (left + right) / 2
             approximate_root_value = func(approximate_root)
-            # TODO adding iterations
+
             iteration = numpy.array((left, right, approximate_root, error),
                                     dtype=[('xl', numpy.float), ('xu', numpy.float), ('xr', numpy.float),
                                            ('err', numpy.float)])

@@ -14,7 +14,7 @@ class DataTable(QDialog):
     def __init__(self, parent, **kwargs):
         super(DataTable, self).__init__(parent)
 
-        self.number_of_iterations= kwargs["results"][0]
+        self.number_of_iterations = kwargs["results"][0]
         self.execution_time = kwargs["results"][1]
         self.iterations = kwargs["results"][2]
         self.approximate_root = kwargs["results"][3]
@@ -36,18 +36,17 @@ class DataTable(QDialog):
 
         self.fill()
 
-
     def fill(self):
         headers = self.iterations[0].dtype.names
 
-        for i in range (0, len(headers)):
+        for i in range(0, len(headers)):
             self.tableWidget.setHorizontalHeaderItem(i, QTableWidgetItem(headers[i]))
             header = self.tableWidget.horizontalHeader()
             header.setSectionResizeMode(i, QtWidgets.QHeaderView.Stretch)
 
         for i in range(0, len(self.iterations)):
             iteration = self.iterations[i]
-            for j in range (0, len(headers)):
+            for j in range(0, len(headers)):
                 header = headers[j]
                 item = str(iteration[header])
                 self.tableWidget.setItem(i, j, QTableWidgetItem(item))
@@ -87,9 +86,7 @@ class PlotWindow(QDialog):
         layout.addWidget(self.pos_label)
         self.setLayout(layout)
 
-
         self.plot()
-
 
     def plot(self):
         iteration = self.iterations[self.pos]
@@ -113,14 +110,14 @@ class PlotWindow(QDialog):
         x2 = iteration['approx_root']
 
         diff = max(x1, x2) - min(x1, x2)
-        start = min(x1, x2) - 0.25*diff
-        end = max(x1, x2) + 0.25*diff
+        start = min(x1, x2) - 0.25 * diff
+        end = max(x1, x2) + 0.25 * diff
         if diff == 0:
             start = -10
             end = 10
         xpts = np.linspace(start, end, 100)
         ax.plot(xpts, self.f(xpts), label='f(x)')
-
+        ax.set_xlim([start, end])
 
         bx.plot([x1, x1], [0, self.f(x1)], color='r', label='x(i)')
         bx.plot([x2, x2], [0, self.f(x2)], color='g', label='x(i+1)')
