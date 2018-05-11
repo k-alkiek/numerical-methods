@@ -16,20 +16,34 @@ class RootFindingMethod(IntEnum):
     GENERAL_ALGORITHM = 7
 
 
-interval_regex = re.compile(r'^\[(...),(...)\]$')
+class InterpolationMethod(IntEnum):
+    NEWTON = 1
+    LAGRANGE = 2
+
+
+list_of_points_regex = re.compile(r'^\[(...)\]$')
 
 
 def remove_spaces(string):
     return re.sub(r'\s+', '', string)
 
 
-def get_interval(string):
-    string = remove_spaces(string)
-    match = interval_regex.match(string)
+def get_list_of_points(string, count=0):
+    match = list_of_points_regex.match(remove_spaces(string))
     if not match:
-        raise ValueError('Expected initial interval for'
-                         'the chosen method')
-    return [float(match.group(1)), float(match.group(2))]
+        raise ValueError('Malformed parameters: ' + string)
+    points = list(map(float, match[1].split(',')))
+    if count and not len(points) == count:
+        raise ValueError('Expected ' + count + ' points, got ' + len(points))
+    return points
+
+
+def get_interval(string):
+    try:
+        interval = get_list_of_points(string, 2)
+    except ValueError:
+        raise ValueError('Expected an interval, got: ' + string)
+    return interval
 
 
 def parse_root_finder_file(path):
@@ -100,4 +114,40 @@ def parse_root_finder_file(path):
         'parameters': parameters,
         'tolerance': tolerance,
         'iterations': iterations
+    }
+
+
+def parse_interpolation_file(path):
+    file = open(path)
+
+    expected = dedent('''\
+            Expected an integer between 1 and 2 as follows:
+            1) Newton's divided difference method
+            2) Lagrange method''')
+    try:
+        method = int(file.readline().strip())
+    except ValueError:
+        raise ValueError(expected)
+    if method not in list(map(int, InterpolationMethod)):
+        raise ValueError(expected)
+
+    expected = 'Expected a positive integer representing'
+    'the number of points used in interpolation'
+    try:
+        order = int(file.readline().strip())
+    except ValueError:
+        raise ValueError(expected)
+    if order <= 0:
+        raise ValueError(expected)
+
+    x_coords = get_list_of_points(file.readline().strip(), order)
+    y_coords = get_list_of_points(file.readline().strip(), order)
+    query_points = get_list_of_points(file.readline().strip())
+
+    file.close()
+    return {
+        'method': method,
+        'order': order,
+        'points': list(zip(x_coords, y_coords)),
+        'query_points': query_points
     }
