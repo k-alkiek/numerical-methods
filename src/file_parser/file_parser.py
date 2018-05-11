@@ -2,7 +2,7 @@ import re
 from enum import IntEnum
 from textwrap import dedent
 
-from sympy import Eq
+from sympy import lambdify
 from sympy.parsing.sympy_parser import\
         parse_expr,\
         standard_transformations,\
@@ -53,12 +53,16 @@ def get_interval(string):
     return interval
 
 
+def check_equation_syntax(equation):
+    parse_expr(equation, transformations=transformations, evaluate=False)
+
+
 def get_equation(string):
     match = equation_regex.match(string)
     if not match:
         raise ValueError('Malformed equation: ' + string)
-    return Eq(parse_expr(
-        match[1] + '-' + match[2], transformations=transformations))
+    check_equation_syntax(match[1]+'-'+match[2])
+    return string
 
 
 def parse_root_finder_file(path):
@@ -81,12 +85,10 @@ def parse_root_finder_file(path):
         raise ValueError(expected)
 
     try:
-        equation = Eq(parse_expr(
-            file.readline(), transformations=transformations))
+        equation = file.readline().strip()
+        check_equation_syntax(equation)
     except SyntaxError as ex:
         raise ValueError('Malformed equation: ' + ex.msg)
-    if not len(equation.free_symbols) == 1:
-        raise ValueError('Equation should contain exactly one symbol')
 
     last_pos = file.tell()
     parameters = file.readline().strip()
@@ -174,7 +176,7 @@ def parse_interpolation_file(path):
 def parse_equations_file(path):
     file = open(path)
     try:
-        equations = [get_equation(line) for line in file]
+        equations = [get_equation(line.strip()) for line in file]
     except SyntaxError as ex:
         raise ValueError('Malformed equation: ' + ex.msg)
     file.close()
