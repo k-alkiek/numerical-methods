@@ -37,7 +37,7 @@ class FalsePosition:
             # Calculate approximate value of root
             approximate_root = (left * right_value - right * left_value) / (right_value - left_value)
             approximate_root_value = func(approximate_root)
-            # TODO adding iterations
+
             iteration = numpy.array((left, right, approximate_root, error),
                                     dtype=[('xl', numpy.float), ('xu', numpy.float), ('xr', numpy.float),
                                            ('err', numpy.float)])

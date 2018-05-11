@@ -44,11 +44,11 @@ class BiergeVieta:
                 derivative_coeffs[i] = c
             # Calculate next approximation of root
             if derivative_coeffs[-1] == 0:
-                raise ZeroDivisionError("Bierge Vieta method can't find a root for this initial value")
+                derivative_coeffs[-1] += epsilon
             displacement = horner_coeffs[-1] / derivative_coeffs[-1]
             approximate_root = current_approx - displacement
             error = abs((approximate_root - current_approx) / approximate_root) * 100
-            # TODO adding iterations
+
             iteration = numpy.array((current_approx, approximate_root, error),
                                     dtype=[('cur_approx', numpy.float), ('approx_root', numpy.float), ('err', numpy.float)])
             iterations.append(iteration)
