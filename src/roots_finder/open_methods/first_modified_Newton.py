@@ -30,10 +30,12 @@ class FirstModifiedNewton:
         error = 100
         iterations = []
         while True:
+            if diff(current_approx) == 0:
+                current_approx += epsilon
             displacement = func(current_approx) / diff(current_approx)
             approximate_root = current_approx - m * displacement
             error = abs((approximate_root - current_approx) / approximate_root) * 100
-            # TODO adding iterations
+
             iteration = numpy.array((current_approx, approximate_root, error),
                                     dtype=[('cur_approx', numpy.float), ('approx_root', numpy.float),
                                            ('err', numpy.float)])

@@ -30,7 +30,7 @@ class FixedPoint:
         while True:
             approximate_root = func(prev_approx)
             error = abs((approximate_root - prev_approx) / approximate_root) * 100
-            # TODO adding iterations
+
             iteration = numpy.array((prev_approx, approximate_root, error),
                                     dtype=[('prev_approx', numpy.float), ('approx_root', numpy.float),
                                            ('err', numpy.float)])
