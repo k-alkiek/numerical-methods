@@ -6,9 +6,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from src.interpolation.interpolation import interpolate
 from src.roots_finder.root_finder_factory import RootFinderFactory
+from src.system_of_equations.Gauss_Jordan import GaussJordan
 from ui_main_window import Ui_MainWindow
 from result_window import ResultWindow
-from controllers import interpolation_controller
+from controllers import interpolation_controller, gauss_jordan_controller
 
 
 class MainWindow(QMainWindow):
@@ -32,6 +33,7 @@ class MainWindow(QMainWindow):
         self.ui.interpolationSolveBtn.clicked.connect(self.interpolationSolve)
         self.ui.sysAddBtn.clicked.connect(self.sysAdd)
         self.ui.sysRemoveBtn.clicked.connect(self.sysRemove)
+        self.ui.sysSolveBtn.clicked.connect(self.sysSolve)
         self.ui.rootLoadBtn.clicked.connect(self.loadFile)
         self.ui.interpolationLoadBtn.clicked.connect(self.loadFile)
         self.ui.sysLoadBtn.clicked.connect(self.loadFile)
@@ -95,6 +97,19 @@ class MainWindow(QMainWindow):
 
         rw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
                           {"f": f, "queries": queries})
+        rw.show()
+
+    def sysSolve(self):
+        equations = []
+        for i in range(1, self.ui.sysEqnsForm.rowCount()*2, 2):
+            equations.append(self.ui.sysEqnsForm.itemAt(i).widget().text())
+
+        solver = GaussJordan()
+        results = solver.solve(equations)
+        print(results)
+
+
+        rw = ResultWindow(self, None, gauss_jordan_controller.DataTable, {"results": results})
         rw.show()
 
     def sysAdd(self):
