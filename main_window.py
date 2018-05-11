@@ -1,6 +1,7 @@
 from ast import literal_eval
 
 import sympy
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -37,6 +38,11 @@ class MainWindow(QMainWindow):
         self.ui.rootLoadBtn.clicked.connect(self.rootLoadFile)
         self.ui.interpolationLoadBtn.clicked.connect(self.interpolationLoadFile)
         self.ui.sysLoadBtn.clicked.connect(self.sysLoadFile)
+        self.meme_count = 0
+        self.ui.memeBtn.clicked.connect(self.meme)
+        self.ui.memeLabel.setVisible(False)
+        self.ui.memeLabel.setPixmap(QPixmap("doge.jpg"))
+        self.ui.memeText.setVisible(False)
 
     def changeRootMethod(self):
         index = self.ui.rootComboBox.currentIndex()
@@ -225,3 +231,9 @@ class MainWindow(QMainWindow):
         msg.setWindowTitle("Error")
         msg.resize(500, msg.height())
         msg.show()
+
+    def meme(self):
+        self.meme_count += 1
+        if self.meme_count >= 10:
+            self.ui.memeText.setVisible(True)
+            self.ui.memeLabel.setVisible(True)

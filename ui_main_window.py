@@ -53,6 +53,17 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.textBrowser)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
+        self.memeText = QtWidgets.QTextBrowser(self.tab_0)
+        self.memeText.setObjectName("memeText")
+        self.horizontalLayout.addWidget(self.memeText)
+        self.memeLabel = QtWidgets.QLabel(self.tab_0)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.memeLabel.sizePolicy().hasHeightForWidth())
+        self.memeLabel.setSizePolicy(sizePolicy)
+        self.memeLabel.setObjectName("memeLabel")
+        self.horizontalLayout.addWidget(self.memeLabel)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.tab_4.addTab(self.tab_0, "")
         self.tab_1 = QtWidgets.QWidget()
@@ -295,8 +306,18 @@ class Ui_MainWindow(object):
         self.verticalLayout_17.addItem(spacerItem18)
         self.tab_4.addTab(self.tab_3, "")
         self.verticalLayout_10.addWidget(self.tab_4)
+        self.memeBtn = QtWidgets.QPushButton(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.memeBtn.sizePolicy().hasHeightForWidth())
+        self.memeBtn.setSizePolicy(sizePolicy)
+        self.memeBtn.setText("")
+        self.memeBtn.setObjectName("memeBtn")
+        self.verticalLayout_10.addWidget(self.memeBtn)
         self.tab_4.raise_()
         self.label_26.raise_()
+        self.memeBtn.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 717, 20))
@@ -326,6 +347,17 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The aim of the project is to implement some of the numerical methods taught during the course which include root finding techniques, interpolation and solving systems of linear equations.</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The source code for the project is avialable on Github here:<br /><a href=\"https://github.com/k-alkiek/numerical-methods\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/k-alkiek/numerical-methods</span></a></p></body></html>"))
+        self.memeText.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Sans Serif\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">much numbers</span></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">very accuracy</span></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:14pt;\">so error</span></p>\n"
+"<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:14pt;\"><br /></p></body></html>"))
+        self.memeLabel.setText(_translate("MainWindow", "TextLabel"))
         self.tab_4.setTabText(self.tab_4.indexOf(self.tab_0), _translate("MainWindow", "Welcome"))
         self.label_8.setText(_translate("MainWindow", "  Choose Method"))
         self.rootComboBox.setCurrentText(_translate("MainWindow", "General Algorithm"))
