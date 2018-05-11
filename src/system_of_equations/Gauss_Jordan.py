@@ -59,9 +59,3 @@ class GaussJordan:
                 max_index = i
                 pivot = abs(matrix[i, row_index])
         return max_index
-
-
-solver = GaussJordan()
-equations = ["x + y + 2 * z = 8", "-1 * x -2 * y + 3 * z = 1", "3 * x + 7 * y + 4 * z = 10",
-             "3 * x + 7 * y + 4 * z + w = 10"]
-print(solver.solve(equations))
