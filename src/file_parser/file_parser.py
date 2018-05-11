@@ -3,7 +3,10 @@ from enum import IntEnum
 from textwrap import dedent
 
 from sympy import Eq
-from sympy.parsing.sympy_parser import parse_expr
+from sympy.parsing.sympy_parser import\
+        parse_expr,\
+        standard_transformations,\
+        implicit_multiplication_application
 
 
 class RootFindingMethod(IntEnum):
@@ -21,6 +24,8 @@ class InterpolationMethod(IntEnum):
     LAGRANGE = 2
 
 
+transformations = (standard_transformations +
+                   (implicit_multiplication_application,))
 list_of_points_regex = re.compile(r'^\[(.*)\]$')
 
 
@@ -67,7 +72,8 @@ def parse_root_finder_file(path):
         raise ValueError(expected)
 
     try:
-        equation = Eq(parse_expr(file.readline()))
+        equation = Eq(parse_expr(
+            file.readline(), transformations=transformations))
     except SyntaxError as ex:
         raise ValueError('Malformed equation: ' + ex.msg)
     if not len(equation.free_symbols) == 1:
@@ -159,7 +165,8 @@ def parse_interpolation_file(path):
 def parse_equations_file(path):
     file = open(path)
     try:
-        equations = [Eq(parse_expr(line.strip())) for line in file]
+        equations = [Eq(parse_expr(
+            line, transformations=transformations)) for line in file]
     except SyntaxError as ex:
         raise ValueError('Malformed equation: ' + ex.msg)
     file.close()
