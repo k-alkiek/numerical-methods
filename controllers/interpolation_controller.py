@@ -1,3 +1,4 @@
+import sympy
 from PyQt5 import QtWidgets
 
 from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton, QHeaderView
@@ -62,6 +63,7 @@ class PlotWindow(QDialog):
 
         self.f = kwargs["f"]
         self.queries = list(map(float, kwargs["queries"]))
+        self.expr = kwargs['expr']
         self.plot()
 
 
@@ -73,6 +75,11 @@ class PlotWindow(QDialog):
         ax.axhline(y=0, color='k')
         ax.axvline(x=0, color='k')
         ax.grid(True, which='both')
+
+
+        self.figure.suptitle(sympy.simplify(self.expr))
+        # discards the old graph
+        # ax.clear()
 
         xpts = np.linspace(0, 100, 1000)
         ax.plot(xpts, self.f(xpts), label="Interpolated f(x)")

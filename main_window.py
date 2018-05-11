@@ -119,7 +119,7 @@ class MainWindow(QMainWindow):
             f = sympy.lambdify('x', sym_function)
 
             rw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
-                              {"f": f, "queries": queries})
+                              {"f": f, "queries": queries,'expr': sym_function})
             rw.show()
         except Exception as e:
             self.errorDialog(e.args[0])
