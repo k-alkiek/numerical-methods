@@ -1,3 +1,4 @@
+from src.general_algorithm.general_algorithm import general_algorithm
 from src.roots_finder.bracketing_methods.bisection import Bisection
 from src.roots_finder.bracketing_methods.regula_falsi import FalsePosition
 from src.roots_finder.open_methods.fixed_point import FixedPoint
@@ -7,7 +8,7 @@ from src.roots_finder.open_methods.first_modified_Newton import FirstModifiedNew
 from src.roots_finder.open_methods.second_modified_Newton import SecondModifiedNewton
 from src.roots_finder.roots_of_polynomial.Bierge_Vieta import BiergeVieta
 from controllers import bracketing_methods_controller, fixed_point_controller, \
-    newton_raphson_controller, birge_vieta_controller, secant_controller
+    newton_raphson_controller, birge_vieta_controller, secant_controller, general_algorithm_controller
 
 
 class RootFinderFactory:
@@ -47,6 +48,10 @@ class RootFinderFactory:
             solver = BiergeVieta()
             PlotWindow = birge_vieta_controller.PlotWindow
             DataTable = birge_vieta_controller.DataTable
+        elif method_name == "General Algorithm" or method_name == "6":
+            solver = general_algorithm()
+            PlotWindow = general_algorithm_controller.PlotWindow
+            DataTable = general_algorithm_controller.DataTable
         # TODO adding general method
         return solver.solve(equation, *args), PlotWindow, DataTable
 

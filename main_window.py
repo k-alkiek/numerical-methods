@@ -57,30 +57,32 @@ class MainWindow(QMainWindow):
             self.ui.rootX1Label.setText("  X1")
 
     def rootSolve(self):
-        try:
-            expression = self.ui.rootFx.text()
-            method_name = self.ui.rootComboBox.currentText()
+    # try:
+        expression = self.ui.rootFx.text()
+        method_name = self.ui.rootComboBox.currentText()
 
-            inital_points = []
-            if self.ui.rootX0.isEnabled():
-                inital_points.append(self.ui.rootX0.value())
-            if self.ui.rootX1.isEnabled():
-                inital_points.append(self.ui.rootX1.value())
+        inital_points = []
+        if self.ui.rootX0.isEnabled():
+            inital_points.append(self.ui.rootX0.value())
+        if self.ui.rootX1.isEnabled():
+            inital_points.append(self.ui.rootX1.value())
 
-            max_iterations = self.ui.rootMaxIterations.value()
-            percision = self.ui.rootPercision.value()
+        max_iterations = self.ui.rootMaxIterations.value()
+        percision = self.ui.rootPercision.value()
 
-            f = sympy.lambdify('x', expression)
+        f = sympy.lambdify('x', expression)
+        factory = RootFinderFactory()
 
-            if method_name == "General Algorithm":
-                pass
-            else:
-                factory = RootFinderFactory()
-                results, PlotWindow, Datatable = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
-                rw = ResultWindow(self, PlotWindow, Datatable, {"results": results})
-                rw.show()
-        except Exception as e:
-            self.errorDialog(e.args[0])
+        if method_name == "General Algorithm":
+            results, PlotWindow, Datatable = factory.solve(method_name, expression, max_iterations, percision)
+            rw = ResultWindow(self, PlotWindow, Datatable, {"general_results": results})
+        else:
+            results, PlotWindow, Datatable = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
+            rw = ResultWindow(self, PlotWindow, Datatable, {"results": results})
+
+        rw.show()
+    # except Exception as e:
+    #     self.errorDialog(e.args[0])
 
     def interpolationSolve(self):
         try:

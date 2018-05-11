@@ -5,7 +5,7 @@ import timeit
 
 class general_algorithm:
 
-    def solve(self, equation, num_terms=10, num_iterations=100,epsilon=10**-5):
+    def solve(self, equation, num_iterations=100,epsilon=10**-5, num_terms=10):
         start_time = timeit.default_timer()
         expression = equation_to_expression(equation)
         x = get_symbol(expression)

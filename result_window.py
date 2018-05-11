@@ -29,6 +29,15 @@ class TabWidget(QWidget):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
 
+        if "general_results" in params.keys():
+            number_of_iterations = params["general_results"][0]
+            roots = params["general_results"][1]
+            execution_time = params["general_results"][2]
+
+            self.summary = QLabel("Found {:d} Roots \t \t {:d} iterations \t {:f} seconds"
+                                  .format(len(roots), number_of_iterations, execution_time))
+            self.layout.addWidget(self.summary)
+
         if PlotWindow is not None and "results" in params.keys():
             number_of_iterations = params["results"][0]
             execution_time = params["results"][1]
