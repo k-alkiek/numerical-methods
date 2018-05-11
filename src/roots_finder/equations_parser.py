@@ -21,3 +21,17 @@ def expression_to_lambda(x, expression):
     except ValueError:
         raise ValueError("Not a valid function")
     return func
+
+def to_polynomial(expression, num_terms=10):
+    try:
+        x = get_symbol(expression)
+        poly_terms = []
+        fact = 1;
+        for i in range(num_terms):
+            func = expression_to_lambda(x, expression)
+            poly_terms.append(func(0) / fact)
+            fact *= (i + 1)
+            expression = sympy.diff(expression, x)
+        return poly_terms
+    except ValueError:
+        raise ValueError("Not a valid function")
