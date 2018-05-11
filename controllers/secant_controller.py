@@ -5,6 +5,9 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import numpy as np
 
+from controllers.my_navigation_toolbar import MyNavigationToolbar
+
+
 class DataTable(QDialog):
     def __init__(self, parent, **kwargs):
         super(DataTable, self).__init__(parent)
@@ -110,6 +113,9 @@ class PlotWindow(QDialog):
         diff = max(xu, xl, xr) - min(xu, xl, xr)
         start = min(xu, xl, xr) - 0.25*diff
         end = max(xu, xl, xr) + 0.25*diff
+        if diff == 0:
+            start = -10
+            end = 10
         xpts = np.linspace(start, end, 100)
         ax.plot(xpts, self.f(xpts), label='f(x)')
 
@@ -160,7 +166,3 @@ class PlotWindow(QDialog):
             self.pos = len(self.iterations) - 1
             self.plot()
 
-class MyNavigationToolbar(NavigationToolbar2QT):
-
-    toolitems = [t for t in NavigationToolbar2QT.toolitems if
-                 t[0] in ('Home','Pan', 'Zoom', 'Save','Subplots')]

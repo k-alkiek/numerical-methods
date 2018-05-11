@@ -42,12 +42,17 @@ class MainWindow(QMainWindow):
         if index == 0:
             self.ui.rootX0.setEnabled(False)
             self.ui.rootX1.setEnabled(False)
-        elif index in [1, 2, 7]:
+        elif index in [1, 2, 5, 7]:
             self.ui.rootX0.setEnabled(True)
             self.ui.rootX1.setEnabled(True)
         else:
             self.ui.rootX0.setEnabled(True)
             self.ui.rootX1.setEnabled(False)
+
+        if index == 5:
+            self.ui.rootX1Label.setText("  Multiplicity")
+        else:
+            self.ui.rootX1Label.setText("  X1")
 
     def rootSolve(self):
     # try:

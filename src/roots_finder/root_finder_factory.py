@@ -43,7 +43,7 @@ class RootFinderFactory:
             solver = SecondModifiedNewton()
             PlotWindow = newton_raphson_controller.PlotWindow
             DataTable = newton_raphson_controller.DataTable
-        elif method_name == "Bierge Vieta" or method_name == "6":
+        elif method_name == "Birge Vieta" or method_name == "6":
             solver = BiergeVieta()
             PlotWindow = birge_vieta_controller.PlotWindow
             DataTable = birge_vieta_controller.DataTable

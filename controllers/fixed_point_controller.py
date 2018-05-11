@@ -105,24 +105,22 @@ class PlotWindow(QDialog):
         ax.axvline(x=0, color='k')
         ax.grid(True, which='both')
 
+        x1 = iteration['prev_approx']
+        x2 = iteration['approx_root']
 
-        xl = iteration['xl']
-        xu = iteration['xu']
-        xr = iteration['xr']
-
-        diff = xu - xl
-        start = xl-0.5*diff
-        end = xu+0.5*diff
+        diff = max(x1, x2) - min(x1, x2)
+        start = min(x1, x2) - 0.25*diff
+        end = max(x1, x2) + 0.25*diff
         if diff == 0:
             start = -10
             end = 10
         xpts = np.linspace(start, end, 100)
-        ax.plot(xpts, self.f(xpts), label='f(x)')
+        ax.plot(xpts, self.f(xpts), label='g(x)')
+        ax.plot(xpts, xpts, color='c', label='h(x) = x')
 
 
-        bx.plot([xl, xl], [0, self.f(xl)], color='r', label='xl')
-        bx.plot([xr, xr], [0, self.f(xr)], color='g', label='xr')
-        bx.plot([xu, xu], [0, self.f(xu)], color='r', label='xu')
+        bx.plot([x1, x1], [0, self.f(x1)], color='r', label='x(i)')
+        bx.plot([x2, x2], [0, self.f(x2)], color='g', label='x(i+1)')
         ax.legend()
         # refresh canvas
         self.canvas.draw()

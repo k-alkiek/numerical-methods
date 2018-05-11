@@ -37,7 +37,7 @@ class SecondModifiedNewton:
             error = abs((approximate_root - current_approx) / approximate_root) * 100
             # TODO adding iterations
             iteration = numpy.array((current_approx, approximate_root, error),
-                                    dtype=[('cur', numpy.float), ('approx_root', numpy.float),
+                                    dtype=[('cur_approx', numpy.float), ('approx_root', numpy.float),
                                            ('err', numpy.float)])
             iterations.append(iteration)
             current_approx = approximate_root
