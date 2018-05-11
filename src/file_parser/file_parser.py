@@ -27,6 +27,7 @@ class InterpolationMethod(IntEnum):
 transformations = (standard_transformations +
                    (implicit_multiplication_application,))
 list_of_points_regex = re.compile(r'^\[(.*)\]$')
+equation_regex = re.compile(r'^(.*)=(.*)$')
 
 
 def remove_spaces(string):
@@ -50,6 +51,14 @@ def get_interval(string):
     except ValueError:
         raise ValueError('Expected an interval, got: ' + string)
     return interval
+
+
+def get_equation(string):
+    match = equation_regex.match(string)
+    if not match:
+        raise ValueError('Malformed equation: ' + string)
+    return Eq(parse_expr(
+        match[1] + '-' + match[2], transformations=transformations))
 
 
 def parse_root_finder_file(path):
@@ -165,8 +174,7 @@ def parse_interpolation_file(path):
 def parse_equations_file(path):
     file = open(path)
     try:
-        equations = [Eq(parse_expr(
-            line, transformations=transformations)) for line in file]
+        equations = [get_equation(line) for line in file]
     except SyntaxError as ex:
         raise ValueError('Malformed equation: ' + ex.msg)
     file.close()
