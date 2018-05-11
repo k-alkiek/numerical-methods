@@ -21,7 +21,7 @@ class InterpolationMethod(IntEnum):
     LAGRANGE = 2
 
 
-list_of_points_regex = re.compile(r'^\[(...)\]$')
+list_of_points_regex = re.compile(r'^\[(.*)\]$')
 
 
 def remove_spaces(string):
@@ -34,7 +34,8 @@ def get_list_of_points(string, count=0):
         raise ValueError('Malformed parameters: ' + string)
     points = list(map(float, match[1].split(',')))
     if count and not len(points) == count:
-        raise ValueError('Expected ' + count + ' points, got ' + len(points))
+        raise ValueError('Expected ' + str(count) +
+                         ' points, got ' + str(len(points)))
     return points
 
 
