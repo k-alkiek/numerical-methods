@@ -1,0 +1,103 @@
+import re
+from enum import IntEnum
+from textwrap import dedent
+
+from sympy import Eq
+from sympy.parsing.sympy_parser import parse_expr
+
+
+class RootFindingMethod(IntEnum):
+    BISECTION = 1
+    FALSE_POSITION = 2
+    FIXED_POINT = 3
+    NEWTON_RAPHSON = 4
+    SECANT = 5
+    BIERGE_VIETA = 6
+    GENERAL_ALGORITHM = 7
+
+
+interval_regex = re.compile(r'^\[(...),(...)\]$')
+
+
+def remove_spaces(string):
+    return re.sub(r'\s+', '', string)
+
+
+def get_interval(string):
+    string = remove_spaces(string)
+    match = interval_regex.match(string)
+    if not match:
+        raise ValueError('Expected initial interval for'
+                         'the chosen method')
+    return [float(match.group(1)), float(match.group(2))]
+
+
+def parse_root_finder_file(path):
+    file = open(path)
+
+    expected = dedent('''\
+            Expected an integer between 1 and 7 as follows:
+            1) Bisection method
+            2) False-position method
+            3) Fixed-point method
+            4) Newton-Raphson method
+            5) Secand method
+            6) Bierge-Vieta method
+            7) General algorithm''')
+    try:
+        method = int(file.readline().strip())
+    except ValueError:
+        raise ValueError(expected)
+    if method not in list(map(int, RootFindingMethod)):
+        raise ValueError(expected)
+
+    try:
+        equation = Eq(parse_expr(file.readline()))
+    except SyntaxError as ex:
+        raise ValueError('Malformed equation: ' + ex.msg)
+
+    last_pos = file.tell()
+    parameters = file.readline().strip()
+    try:
+        if method == RootFindingMethod.BISECTION:
+            parameters = get_interval(parameters)
+        elif method == RootFindingMethod.FALSE_POSITION:
+            parameters = get_interval(parameters)
+        elif method == RootFindingMethod.FIXED_POINT:
+            parameters = [float(parameters)]
+        elif method == RootFindingMethod.NEWTON_RAPHSON:
+            parameters = [float(parameters)]
+        elif method == RootFindingMethod.SECANT:
+            parameters = list(map(float, parameters.split()))
+        elif method == RootFindingMethod.BIERGE_VIETA:
+            parameters = [float(parameters)]
+        elif method == RootFindingMethod.GENERAL_ALGORITHM:
+            file.seek(last_pos)
+    except ValueError:
+        raise ValueError('Malformed parameters, expected decimals')
+
+    expected = 'Expected a positive decimal representing tolerance'
+    try:
+        tolerance = float(file.readline().strip())
+    except ValueError:
+        raise ValueError(expected)
+    if tolerance <= 0:
+        raise ValueError(expected)
+
+    expected = 'Expected a positive integer representing the maximum'
+    'number of iterations'
+    try:
+        iterations = int(file.readline().strip())
+    except ValueError:
+        raise ValueError(expected)
+    if iterations <= 0:
+        raise ValueError(expected)
+
+    file.close()
+    return {
+        'method': method,
+        'equation': equation,
+        'parameters': parameters,
+        'tolerance': tolerance,
+        'iterations': iterations
+    }
