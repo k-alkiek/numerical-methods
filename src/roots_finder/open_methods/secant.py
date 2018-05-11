@@ -31,7 +31,7 @@ class Secant:
             displacement = (func(cur_value) * (prev_value - cur_value)) / (func(prev_value) - func(cur_value))
             approximate_root = cur_value - displacement
             error = abs((approximate_root - cur_value) / approximate_root) * 100
-            # TODO adding iterations
+
             iteration = numpy.array((prev_value, cur_value, approximate_root, error),
                                     dtype=[('prev', numpy.float), ('cur', numpy.float), ('approx', numpy.float),
                                            ('err', numpy.float)])

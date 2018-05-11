@@ -20,7 +20,7 @@ class FixedPoint:
             expression = equation_to_expression(equation)
             x = get_symbol(expression)
             expression = sympy.Add(x, -expression)
-            func = expression_to_lambda(x, expression)
+            func = expression_to_lambda(x, -expression)
         except ValueError:
             raise ValueError("Not a valid function")
         prev_approx = approximate_root
@@ -30,19 +30,19 @@ class FixedPoint:
         while True:
             approximate_root = func(prev_approx)
             error = abs((approximate_root - prev_approx) / approximate_root) * 100
-            # TODO adding iterations
+
             iteration = numpy.array((prev_approx, approximate_root, error),
                                     dtype=[('prev_approx', numpy.float), ('approx_root', numpy.float),
                                            ('err', numpy.float)])
             iterations.append(iteration)
             prev_approx = approximate_root
             number_of_iterations += 1
-            if error >= 100:
-                raise ValueError("Fixed point method can't find a root for this initial value, may be diverged")
+            # if error >= 100:
+            #     raise ValueError("Fixed point method can't find a root for this initial value, may be diverged")
 
             if error < epsilon or number_of_iterations > max_iterations:
                 break
 
         execution_time = timeit.default_timer() - start_time
-
+        print(func(1))
         return number_of_iterations, execution_time, iterations, approximate_root, error, func
