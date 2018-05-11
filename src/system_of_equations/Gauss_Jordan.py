@@ -31,7 +31,13 @@ class GaussJordan:
         symbols = system[2]
         eqs = system[3]
         n = len(equations)
+        if n != len(symbols) or coefficients.det() == 0:
+            raise ValueError("The system has not a unique solution")
+
         for k in range(n):
+            max_elem_index = self.__pivoting(coefficients, k)
+            coefficients.row_swap(max_elem_index, k)
+            rhs.row_swap(max_elem_index, k)
             for i in range(n):
                 if i == k:
                     continue
@@ -44,7 +50,18 @@ class GaussJordan:
             ans.append((symbols[i], float(rhs[i, 0] / coefficients[i, i])))
         return ans, eqs
 
+    def __pivoting(self, matrix: sympy.Matrix, row_index):
+        max_index = row_index
+        pivot = abs(matrix[row_index, row_index])
+        rows = matrix.shape[0]
+        for i in range(row_index, rows):
+            if abs(matrix[i, row_index]) > pivot:
+                max_index = i
+                pivot = abs(matrix[i, row_index])
+        return max_index
+
 
 solver = GaussJordan()
-equations = ["x + y + 2 * z = 8", "-1 * x -2 * y + 3 * z = 1", "3 * x + 7 * y + 4 * z = 10"]
+equations = ["x + y + 2 * z = 8", "-1 * x -2 * y + 3 * z = 1", "3 * x + 7 * y + 4 * z = 10",
+             "3 * x + 7 * y + 4 * z + w = 10"]
 print(solver.solve(equations))
