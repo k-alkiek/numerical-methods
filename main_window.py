@@ -10,7 +10,7 @@ from src.system_of_equations.Gauss_Jordan import GaussJordan
 from ui_main_window import Ui_MainWindow
 from result_window import ResultWindow
 from controllers import interpolation_controller, gauss_jordan_controller
-
+from src.file_parser.file_parser import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -34,9 +34,9 @@ class MainWindow(QMainWindow):
         self.ui.sysAddBtn.clicked.connect(self.sysAdd)
         self.ui.sysRemoveBtn.clicked.connect(self.sysRemove)
         self.ui.sysSolveBtn.clicked.connect(self.sysSolve)
-        self.ui.rootLoadBtn.clicked.connect(self.loadFile)
-        self.ui.interpolationLoadBtn.clicked.connect(self.loadFile)
-        self.ui.sysLoadBtn.clicked.connect(self.loadFile)
+        self.ui.rootLoadBtn.clicked.connect(self.rootLoadFile)
+        self.ui.interpolationLoadBtn.clicked.connect(self.interpolationLoadFile)
+        self.ui.sysLoadBtn.clicked.connect(self.sysLoadFile)
 
     def changeRootMethod(self):
         index = self.ui.rootComboBox.currentIndex()
@@ -57,60 +57,65 @@ class MainWindow(QMainWindow):
             self.ui.rootX1Label.setText("  X1")
 
     def rootSolve(self):
-    # try:
-        expression = self.ui.rootFx.text()
-        method_name = self.ui.rootComboBox.currentText()
+        try:
+            expression = self.ui.rootFx.text()
+            method_name = self.ui.rootComboBox.currentText()
 
-        inital_points = []
-        if self.ui.rootX0.isEnabled():
-            inital_points.append(self.ui.rootX0.value())
-        if self.ui.rootX1.isEnabled():
-            inital_points.append(self.ui.rootX1.value())
+            inital_points = []
+            if self.ui.rootX0.isEnabled():
+                inital_points.append(self.ui.rootX0.value())
+            if self.ui.rootX1.isEnabled():
+                inital_points.append(self.ui.rootX1.value())
 
-        max_iterations = self.ui.rootMaxIterations.value()
-        percision = self.ui.rootPercision.value()
+            max_iterations = self.ui.rootMaxIterations.value()
+            percision = self.ui.rootPercision.value()
 
-        f = sympy.lambdify('x', expression)
+            f = sympy.lambdify('x', expression)
 
-        if method_name == "General Algorithm":
-            pass
-        else:
-            factory = RootFinderFactory()
-            results, PlotWindow, Datatable = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
-            rw = ResultWindow(self, PlotWindow, Datatable, {"results": results})
-            rw.show()
-    # except Exception as e:
-    #     self.errorDialog(e.args[0])
+            if method_name == "General Algorithm":
+                pass
+            else:
+                factory = RootFinderFactory()
+                results, PlotWindow, Datatable = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
+                rw = ResultWindow(self, PlotWindow, Datatable, {"results": results})
+                rw.show()
+        except Exception as e:
+            self.errorDialog(e.args[0])
 
     def interpolationSolve(self):
+        try:
+            sample_points = literal_eval(self.ui.interpolationSampleLineEdit.text())
+            queries = self.ui.interpolationQueryLineEdit.text().split(',')
+            interpolation = interpolate(sample_points)
+            method_index = self.ui.interpolationComboBox.currentIndex()
 
-        sample_points = literal_eval(self.ui.interpolationSampleLineEdit.text())
-        queries = self.ui.interpolationQueryLineEdit.text().split(',')
-        interpolation = interpolate(sample_points)
-        method_index = self.ui.interpolationComboBox.currentIndex()
+            if method_index == 0:
+                sym_function = interpolation.newoten_method()
+            else:
+                sym_function = interpolation.lagrange()
+            f = sympy.lambdify('x', sym_function)
 
-        if method_index == 0:
-            sym_function = interpolation.newoten_method()
-        else:
-            sym_function = interpolation.lagrange()
-        f = sympy.lambdify('x', sym_function)
-
-        rw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
-                          {"f": f, "queries": queries})
-        rw.show()
+            rw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
+                              {"f": f, "queries": queries})
+            rw.show()
+        except Exception as e:
+            self.errorDialog(e.args[0])
 
     def sysSolve(self):
-        equations = []
-        for i in range(1, self.ui.sysEqnsForm.rowCount()*2, 2):
-            equations.append(self.ui.sysEqnsForm.itemAt(i).widget().text())
+        try:
+            equations = []
+            for i in range(1, self.ui.sysEqnsForm.rowCount()*2, 2):
+                equations.append(self.ui.sysEqnsForm.itemAt(i).widget().text())
 
-        solver = GaussJordan()
-        results = solver.solve(equations)
-        print(results)
+            solver = GaussJordan()
+            results = solver.solve(equations)
+            print(results)
 
 
-        rw = ResultWindow(self, None, gauss_jordan_controller.DataTable, {"results": results})
-        rw.show()
+            rw = ResultWindow(self, None, gauss_jordan_controller.DataTable, {"results": results})
+            rw.show()
+        except Exception as e:
+            self.errorDialog(e.args[0])
 
     def sysAdd(self):
 
@@ -127,12 +132,51 @@ class MainWindow(QMainWindow):
         if self.ui.sysEqnsForm.rowCount() > 2:
             self.ui.sysEqnsForm.removeRow(self.ui.sysEqnsForm.rowCount() - 1)
 
-    def loadFile(self):
+    def open_file(self):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        fileName, _ = QtWidgets.QFileDialog.getOpenFileName()
-        if fileName:
-            print(fileName)
+        file_name, _ = QtWidgets.QFileDialog.getOpenFileName()
+        if file_name:
+            return file_name
+
+    def rootLoadFile(self):
+        file = self.open_file()
+        if file:
+            try:
+                params = parse_root_finder_file(file)
+                method_number = params['method']
+                self.ui.rootFx.setText(str(params['equation'].lhs))
+                self.ui.rootX0.setValue(params['parameters'][0])
+                if len(params['parameters']) > 1:
+                    self.ui.rootX1.setValue(params['parameters'][1])
+                self.ui.rootMaxIterations.setValue(params['iterations'])
+                self.ui.rootPercision.setValue(params['tolerance'])
+
+                if method_number > 4:
+                    method_number += 2
+                self.ui.rootComboBox.setCurrentIndex(method_number)
+                self.changeRootMethod()
+            except Exception as e:
+                self.errorDialog(e.args[0])
+
+
+    def interpolationLoadFile(self):
+        file = self.open_file()
+        if file:
+            try:
+                params = parse_interpolation_file(file)
+                print(params)
+            except Exception as e:
+                self.errorDialog(e.args[0])
+
+    def sysLoadFile(self):
+        file = self.open_file()
+        if file:
+            try:
+                params = parse_equations_file(file)
+                print(params)
+            except Exception as e:
+                self.errorDialog(e.args[0])
 
     def errorDialog(self, text="Oh no! Something went wrong."):
         msg = QtWidgets.QMessageBox(self)
