@@ -168,7 +168,7 @@ class MainWindow(QMainWindow):
             try:
                 params = parse_root_finder_file(file)
                 method_number = params['method']
-                self.ui.rootFx.setText(str(params['equation'].lhs))
+                self.ui.rootFx.setText(params['equation'])
                 self.ui.rootX0.setValue(params['parameters'][0])
                 if len(params['parameters']) > 1:
                     self.ui.rootX1.setValue(params['parameters'][1])
