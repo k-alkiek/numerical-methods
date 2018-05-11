@@ -143,8 +143,8 @@ def parse_interpolation_file(path):
     if order <= 0:
         raise ValueError(expected)
 
-    x_coords = get_list_of_points(file.readline().strip(), order)
-    y_coords = get_list_of_points(file.readline().strip(), order)
+    x_coords = get_list_of_points(file.readline().strip())
+    y_coords = get_list_of_points(file.readline().strip())
     query_points = get_list_of_points(file.readline().strip())
 
     file.close()
