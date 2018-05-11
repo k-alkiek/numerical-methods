@@ -197,8 +197,8 @@ class MainWindow(QMainWindow):
                 queries = params['query_points']
                 self.ui.interpolationOrderLineEdit.setValue(order)
                 self.ui.interpolationComboBox.setCurrentIndex(method-1)
-                self.ui.interpolationQueryLineEdit.setText(str(queries))
-                self.ui.interpolationSampleLineEdit.setText(str(points))
+                self.ui.interpolationQueryLineEdit.setText(str(queries)[1:-1])
+                self.ui.interpolationSampleLineEdit.setText(str(points)[1:-1])
                 print(params)
             except Exception as e:
                 self.errorDialog(e.args[0])
@@ -208,12 +208,12 @@ class MainWindow(QMainWindow):
         if file:
             try:
                 equations = parse_equations_file(file)
-                for i in range(equations):
+                for i in range(len(equations)):
                     if(i < 2):
-                        self.ui.sysEqnsForm.itemAt(i).widget().setText(str(equations[i]))
+                        self.ui.sysEqnsForm.itemAt(2*i + 1).widget().setText(str(equations[i]))
                     else:
                         self.sysAdd();
-                        self.ui.sysEqnsForm.itemAt(i).widget().setText(str(equations[i]))
+                        self.ui.sysEqnsForm.itemAt(2*i + 1).widget().setText(str(equations[i]))
             except Exception as e:
                 self.errorDialog(e.args[0])
 
