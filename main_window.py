@@ -171,16 +171,10 @@ class MainWindow(QMainWindow):
                 order = params['order']
                 points = params['points']
                 queries = params['query_points']
-                interpolation = interpolate(points)
-                if method == 1:
-                    sym_function = interpolation.newoten_method()
-                elif method == 2:
-                    sym_function = interpolation.lagrange()
-                f = sympy.lambdify('x', sym_function)
-
-                rw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
-                                  {"f": f, "queries": queries})
-                rw.show()
+                self.ui.interpolationOrderLineEdit.setValue(order)
+                self.ui.interpolationComboBox.setCurrentIndex(method-1)
+                self.ui.interpolationQueryLineEdit.setText(str(queries))
+                self.ui.interpolationSampleLineEdit.setText(str(points))
                 print(params)
             except Exception as e:
                 self.errorDialog(e.args[0])
@@ -190,11 +184,12 @@ class MainWindow(QMainWindow):
         if file:
             try:
                 equations = parse_equations_file(file)
-                solver = GaussJordan()
-                results = solver.solve(equations)
-                rw = ResultWindow(self, None, gauss_jordan_controller.DataTable, {"results": results})
-                rw.show()
-                print(params)
+                for i in range(equations):
+                    if(i < 2):
+                        self.ui.sysEqnsForm.itemAt(i).widget().setText(str(equations[i]))
+                    else:
+                        self.sysAdd();
+                        self.ui.sysEqnsForm.itemAt(i).widget().setText(str(equations[i]))
             except Exception as e:
                 self.errorDialog(e.args[0])
 
