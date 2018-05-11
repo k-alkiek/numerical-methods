@@ -61,7 +61,7 @@ class PlotWindow(QDialog):
         self.setLayout(layout)
 
         self.f = kwargs["f"]
-        self.queries = kwargs["queries"]
+        self.queries = list(map(float, kwargs["queries"]))
         self.plot()
 
 
@@ -70,11 +70,16 @@ class PlotWindow(QDialog):
         # create an axis
         ax = self.figure.add_subplot(111)
 
-        # discards the old graph
-        # ax.clear()
+        ax.axhline(y=0, color='k')
+        ax.axvline(x=0, color='k')
+        ax.grid(True, which='both')
 
         xpts = np.linspace(0, 100, 1000)
-        ax.plot(xpts, self.f(xpts))
+        ax.plot(xpts, self.f(xpts), label="Interpolated f(x)")
 
+        query_pts = np.array(self.queries)
+        ax.scatter(query_pts, self.f(query_pts), marker='x', color='r', label="Query Points")
+
+        ax.legend()
         # refresh canvas
         self.canvas.draw()
