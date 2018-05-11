@@ -57,37 +57,58 @@ class MainWindow(QMainWindow):
             self.ui.rootX1Label.setText("  X1")
 
     def rootSolve(self):
-    # try:
-        expression = self.ui.rootFx.text()
-        method_name = self.ui.rootComboBox.currentText()
+        try:
+            expression = self.ui.rootFx.text()
+            method_name = self.ui.rootComboBox.currentText()
 
-        inital_points = []
-        if self.ui.rootX0.isEnabled():
-            inital_points.append(self.ui.rootX0.value())
-        if self.ui.rootX1.isEnabled():
-            inital_points.append(self.ui.rootX1.value())
+            inital_points = []
+            if self.ui.rootX0.isEnabled():
+                inital_points.append(self.ui.rootX0.value())
+            if self.ui.rootX1.isEnabled():
+                inital_points.append(self.ui.rootX1.value())
 
-        max_iterations = self.ui.rootMaxIterations.value()
-        percision = self.ui.rootPercision.value()
+            max_iterations = self.ui.rootMaxIterations.value()
+            percision = self.ui.rootPercision.value()
 
-        f = sympy.lambdify('x', expression)
-        factory = RootFinderFactory()
+            f = sympy.lambdify('x', expression)
+            factory = RootFinderFactory()
 
-        if method_name == "General Algorithm":
-            results, PlotWindow, Datatable = factory.solve(method_name, expression, max_iterations, percision)
-            rw = ResultWindow(self, PlotWindow, Datatable, {"general_results": results})
-        else:
-            results, PlotWindow, Datatable = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
-            rw = ResultWindow(self, PlotWindow, Datatable, {"results": results})
+            if method_name == "General Algorithm":
+                results, PlotWindow, Datatable = factory.solve(method_name, expression, max_iterations, percision)
+                rw = ResultWindow(self, PlotWindow, Datatable, {"general_results": results})
+            else:
+                results, PlotWindow, Datatable = factory.solve(method_name, expression, *inital_points, max_iterations, percision)
+                rw = ResultWindow(self, PlotWindow, Datatable, {"results": results})
 
-        rw.show()
-    # except Exception as e:
-    #     self.errorDialog(e.args[0])
+            rw.show()
+        except Exception as e:
+            self.errorDialog(e.args[0])
 
     def interpolationSolve(self):
         try:
-            sample_points = literal_eval(self.ui.interpolationSampleLineEdit.text())
+            try:
+                sample_points = literal_eval(self.ui.interpolationSampleLineEdit.text())
+            except Exception as e:
+                raise Exception("Invalid sample points, Enter sample points in the form of comma seperated order pairs.\n"
+                                "Example: (0, 1), (2.25, 3), (4, 6.5)")
+
+            max_x = max(sample_points)[0]
+            min_x = min(sample_points)[0]
+
             queries = self.ui.interpolationQueryLineEdit.text().split(',')
+            if len(queries) == 0:
+                raise Exception("Invalid query points. Enter query points in the form of comma separated values.\n"
+                                "Example: 1, 2, 2.5, 3")
+
+            for q in queries:
+                try:
+                    x = float(q)
+                except Exception as a:
+                    raise Exception("Invalid query points. Enter query points in the form of comma separated values.\n"
+                                    "Example: 1, 2, 2.5, 3")
+                if x < min_x or x > max_x:
+                    raise Exception("Invalid query point {:f}, point is out of the range of sample points.".format(x))
+            
             interpolation = interpolate(sample_points)
             method_index = self.ui.interpolationComboBox.currentIndex()
 
@@ -154,8 +175,11 @@ class MainWindow(QMainWindow):
                 self.ui.rootMaxIterations.setValue(params['iterations'])
                 self.ui.rootPercision.setValue(params['tolerance'])
 
-                if method_number > 4:
+                if method_number == 7:
+                    method_number = 0
+                elif method_number > 4:
                     method_number += 2
+
                 self.ui.rootComboBox.setCurrentIndex(method_number)
                 self.changeRootMethod()
             except Exception as e:
