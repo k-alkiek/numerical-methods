@@ -1,3 +1,5 @@
+from PyQt5 import QtWidgets
+
 from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem
 
 
@@ -26,6 +28,9 @@ class DataTable(QDialog):
     def fill(self):
         self.tableWidget.setHorizontalHeaderItem(0, QTableWidgetItem('Variable'))
         self.tableWidget.setHorizontalHeaderItem(1, QTableWidgetItem('Value'))
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
 
         for i in range(0, len(self.values)):
             value = self.values[i]

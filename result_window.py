@@ -29,7 +29,7 @@ class TabWidget(QWidget):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
 
-        if PlotWindow is not None:
+        if PlotWindow is not None and "results" in params.keys():
             number_of_iterations = params["results"][0]
             execution_time = params["results"][1]
             approximate_root = params["results"][3]

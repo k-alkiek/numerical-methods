@@ -1,4 +1,6 @@
-from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton
+from PyQt5 import QtWidgets
+
+from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QTableWidgetItem, QPushButton, QHeaderView
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
@@ -27,6 +29,9 @@ class DataTable(QDialog):
     def fill(self):
         self.tableWidget.setHorizontalHeaderItem(0, QTableWidgetItem("Query x"))
         self.tableWidget.setHorizontalHeaderItem(1, QTableWidgetItem("Interpolated f(x)"))
+        header = self.tableWidget.horizontalHeader()
+        header.setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QtWidgets.QHeaderView.Stretch)
 
         for i in range(0, len(self.queries)):
             x = float(self.queries[i])
