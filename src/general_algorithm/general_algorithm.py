@@ -3,7 +3,6 @@ from src.roots_finder.equations_parser import *
 
 class General_Algorithm:
 
-
     def solve(self, equation, num_terms=10, num_iterations=100):
         expression = equation_to_expression(equation)
         coefficients = to_polynomial(expression, num_terms)
