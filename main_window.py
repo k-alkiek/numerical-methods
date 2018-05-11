@@ -165,6 +165,20 @@ class MainWindow(QMainWindow):
         if file:
             try:
                 params = parse_interpolation_file(file)
+                method = params['method']
+                order = params['order']
+                points = params['points']
+                queries = params['query_points']
+                interpolation = interpolate(points)
+                if method == 1:
+                    sym_function = interpolation.newoten_method()
+                elif method == 2:
+                    sym_function = interpolation.lagrange()
+                f = sympy.lambdify('x', sym_function)
+
+                rw = ResultWindow(self, interpolation_controller.PlotWindow, interpolation_controller.DataTable,
+                                  {"f": f, "queries": queries})
+                rw.show()
                 print(params)
             except Exception as e:
                 self.errorDialog(e.args[0])
@@ -173,7 +187,11 @@ class MainWindow(QMainWindow):
         file = self.open_file()
         if file:
             try:
-                params = parse_equations_file(file)
+                equations = parse_equations_file(file)
+                solver = GaussJordan()
+                results = solver.solve(equations)
+                rw = ResultWindow(self, None, gauss_jordan_controller.DataTable, {"results": results})
+                rw.show()
                 print(params)
             except Exception as e:
                 self.errorDialog(e.args[0])
